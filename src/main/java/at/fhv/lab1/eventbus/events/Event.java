@@ -1,16 +1,51 @@
 package at.fhv.lab1.eventbus.events;
 
 public class Event {
-
-    private String customer;
+    private int id;
+    private EventType type;
+    private int customer;
     private long timestamp;
     private String content;
+    private int nextID = 0;
 
-    public String getCustomer() {
+    public Event() {
+    }
+
+    public Event(int customer, long timestamp, String content) {
+        this.id = nextID++;
+        this.customer = customer;
+        this.timestamp = timestamp;
+        this.content = content;
+    }
+
+    public Event(long timestamp, String content) {
+        this.id = nextID++;
+        this.customer = -1;
+        this.timestamp = timestamp;
+        this.content = content;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public EventType getType() {
+        return type;
+    }
+
+    public void setType(EventType type) {
+        this.type = type;
+    }
+
+    public int getCustomer() {
         return customer;
     }
 
-    public void setCustomer(String customer) {
+    public void setCustomer(int customer) {
         this.customer = customer;
     }
 
@@ -33,7 +68,8 @@ public class Event {
     @Override
     public String toString() {
         return "Event{" +
-                "customer='" + customer + '\'' +
+                "type=" + type +
+                ", customer=" + customer +
                 ", timestamp=" + timestamp +
                 ", content='" + content + '\'' +
                 '}';

@@ -10,11 +10,14 @@ public class Customer {
     private LocalDate birthdate;
     private List<Booking> bookings;
 
-    public Customer(){}
+    public Customer() {
+    }
 
-    public Customer(int customerID, String name) {
+    public Customer(int customerID, String name, String address, LocalDate birthdate) {
         this.customerID = customerID;
         this.name = name;
+        this.address = address;
+        this.birthdate = birthdate;
     }
 
     public int getCustomerID() {

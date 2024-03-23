@@ -1,0 +1,32 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Book a room</h1>
+<form id="bookRoomForm">
+    <label for="room">Room ID:
+        <input id="room" name="roomID" required type="number">
+    </label>
+    <label for="room">Customer ID:
+        <input id="customer" name="customerID" required type="number">
+    </label>
+    <label for="checkInDate">
+        Check In Date:
+        <input id="checkInDate" name="checkInDate" required type="date">
+    </label>
+    <label for="checkOutDate">
+        Check Out Date:
+        <input id="checkOutDate" name="checkOutDate" required type="date">
+    </label>
+    <button type="submit" value="Book">Book</button>
+</form>
+<h1>Event Management</h1>
+<button id="generateEventBtn">Generate Event</button>
+<button id="clearEventsBtn">Clear All Events</button>
+<button id="generateMasterDataBtn">Generate Master Data</button>
+<ul id="eventsList"></ul>
+<script src="index.js"></script>
+</body>
+</html>

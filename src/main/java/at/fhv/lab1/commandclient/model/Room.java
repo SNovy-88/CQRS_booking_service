@@ -3,17 +3,18 @@ package at.fhv.lab1.commandclient.model;
 import java.util.List;
 
 public class Room {
+    boolean oceanView;
     private int roomNumber;
     private int capacity;
-    boolean oceanView;
     private List<Booking> bookings;
 
     public Room() {
     }
 
-    public Room(int roomNumber, int capacity) {
+    public Room(int roomNumber, int capacity, boolean oceanView) {
         this.roomNumber = roomNumber;
         this.capacity = capacity;
+        this.oceanView = oceanView;
     }
 
     public int getRoomNumber() {

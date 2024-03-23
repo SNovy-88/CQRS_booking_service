@@ -8,11 +8,13 @@ public class Booking {
     private Room room;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
+    private int nextBooking = 0;
 
-    public Booking(){}
+    public Booking() {
+    }
 
-    public Booking(int bookingID, Customer customer, Room room, LocalDate checkInDate, LocalDate checkOutDate) {
-        this.bookingID = bookingID;
+    public Booking(Customer customer, Room room, LocalDate checkInDate, LocalDate checkOutDate) {
+        this.bookingID = nextBooking++;
         this.customer = customer;
         this.room = room;
         this.checkInDate = checkInDate;
