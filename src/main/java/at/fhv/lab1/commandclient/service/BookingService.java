@@ -1,13 +1,13 @@
 package at.fhv.lab1.commandclient.service;
 
-import at.fhv.lab1.commandclient.EventPublisher;
+import at.fhv.lab1.eventbus.EventPublisher;
 import at.fhv.lab1.commandclient.model.Booking;
 import at.fhv.lab1.commandclient.model.BookingRequest;
 import at.fhv.lab1.commandclient.model.Customer;
 import at.fhv.lab1.commandclient.model.Room;
 import at.fhv.lab1.commandclient.repository.BookingRepository;
 import at.fhv.lab1.eventbus.events.Event;
-import at.fhv.lab1.eventbus.events.EventType;
+import at.fhv.lab1.eventbus.events.RoomBookedEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +27,9 @@ public class BookingService implements IBookingService {
         if (validateBookingRequest(bookingRequest)) {
             Booking booking = createBooking(bookingRequest);
             repository.addBooking(booking);
+            long duration = booking.getCheckOutDate().toEpochDay() - booking.getCheckInDate().toEpochDay();
 
-            Event event = createBookingEvent(bookingRequest);
+            RoomBookedEvent event = new RoomBookedEvent(booking.getBookingID(), booking.getCustomer(), booking.getRoom().getRoomNumber(), duration);
             return eventPublisher.publishEvent(event);
         }
         return false;
@@ -53,14 +54,5 @@ public class BookingService implements IBookingService {
         return booking;
     }
 
-    private Event createBookingEvent(BookingRequest bookingRequest) {
-        Event event = new Event();
-        event.setType(EventType.BOOK_ROOM);
-        event.setCustomer(bookingRequest.getCustomerID());
-        event.setTimestamp(System.currentTimeMillis());
-        event.setContent("Booking for room ID: " + bookingRequest.getRoomID() + " at " +
-                bookingRequest.getCheckInDate() + " to " + bookingRequest.getCheckOutDate() + " is requested");
 
-        return event;
-    }
 }

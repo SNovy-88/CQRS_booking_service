@@ -1,5 +1,6 @@
 package at.fhv.lab1.commandclient.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class Room {
@@ -15,6 +16,15 @@ public class Room {
         this.roomNumber = roomNumber;
         this.capacity = capacity;
         this.oceanView = oceanView;
+    }
+
+    public boolean isFree(LocalDate checkInDate, LocalDate checkOutDate){
+        for (Booking booking : bookings) {
+            if (booking.getCheckInDate().isBefore(checkOutDate) && booking.getCheckOutDate().isAfter(checkInDate)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public int getRoomNumber() {
