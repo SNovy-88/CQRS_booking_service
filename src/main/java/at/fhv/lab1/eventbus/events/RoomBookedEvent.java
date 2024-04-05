@@ -12,13 +12,15 @@ package at.fhv.lab1.eventbus.events;
 
 import at.fhv.lab1.commandclient.model.Booking;
 import at.fhv.lab1.commandclient.model.Customer;
+import at.fhv.lab1.commandclient.model.Room;
+import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
 
 public class RoomBookedEvent extends Event{
     private long bookingID;
     private Customer customer;
-    private long roomID;
+    private Room room;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
 
@@ -28,17 +30,9 @@ public class RoomBookedEvent extends Event{
     public RoomBookedEvent(Booking booking){
         this.bookingID = booking.getBookingID();
         this.customer = booking.getCustomer();
-        this.roomID = booking.getRoom().getRoomNumber();
+        this.room = booking.getRoom();
         this.checkInDate = booking.getCheckInDate();
         this.checkOutDate = booking.getCheckOutDate();
-    }
-
-    public RoomBookedEvent(long bookingID, Customer customer, long roomID, LocalDate checkInDate, LocalDate checkOutDate) {
-        this.bookingID = bookingID;
-        this.customer = customer;
-        this.roomID = roomID;
-        this.checkInDate = checkInDate;
-        this.checkOutDate = checkOutDate;
     }
 
     public long getBookingID() {
@@ -57,12 +51,12 @@ public class RoomBookedEvent extends Event{
         this.customer = customer;
     }
 
-    public long getRoomID() {
-        return roomID;
+    public Room getRoom() {
+        return room;
     }
 
-    public void setRoomID(long roomID) {
-        this.roomID = roomID;
+    public void setRoomID(Room room) {
+        this.room = room;
     }
 
     public LocalDate getCheckInDate() {
@@ -86,7 +80,7 @@ public class RoomBookedEvent extends Event{
         return "RoomBookedEvent{" +
                 "bookingID=" + bookingID +
                 ", customer=" + customer +
-                ", roomID=" + roomID +
+                ", room=" + room.getRoomNumber() +
                 ", checkInDate=" + checkInDate +
                 ", checkOutDate=" + checkOutDate +
                 '}';

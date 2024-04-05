@@ -1,12 +1,11 @@
 package at.fhv.lab1.commandclient.service;
 
-import at.fhv.lab1.eventbus.EventPublisher;
 import at.fhv.lab1.commandclient.model.Booking;
-import at.fhv.lab1.commandclient.model.BookingRequest;
+import at.fhv.lab1.commandclient.command.BookRoomCommand;
 import at.fhv.lab1.commandclient.model.Customer;
 import at.fhv.lab1.commandclient.model.Room;
 import at.fhv.lab1.commandclient.repository.BookingRepository;
-import at.fhv.lab1.eventbus.events.Event;
+import at.fhv.lab1.eventbus.EventPublisher;
 import at.fhv.lab1.eventbus.events.RoomBookedEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,33 +22,28 @@ public class BookingService implements IBookingService {
     }
 
     @Override
-    public boolean bookRoom(BookingRequest bookingRequest) {
-        if (validateBookingRequest(bookingRequest)) {
-            Booking booking = createBooking(bookingRequest);
+    public boolean bookRoom(BookRoomCommand bookRoomCommand) {
+        if (validateBookingRequest(bookRoomCommand)) {
+            Booking booking = createBooking(bookRoomCommand);
             repository.addBooking(booking);
-            long duration = booking.getCheckOutDate().toEpochDay() - booking.getCheckInDate().toEpochDay();
 
-            RoomBookedEvent event = new RoomBookedEvent(booking.getBookingID(), booking.getCustomer(), booking.getRoom().getRoomNumber(), duration);
+            RoomBookedEvent event = new RoomBookedEvent(booking);
             return eventPublisher.publishEvent(event);
         }
         return false;
     }
 
-    private boolean validateBookingRequest(BookingRequest bookingRequest) {
+    private boolean validateBookingRequest(BookRoomCommand bookRoomCommand) {
         // TODO: Implement validation
-        if (bookingRequest.getCustomerID() <= 0 || bookingRequest.getRoomID() <= 0) {
-            return false;
-        } else {
-            return true;
-        }
+        return bookRoomCommand.getCustomerID() > 0 && bookRoomCommand.getRoomID() > 0;
     }
 
-    private Booking createBooking(BookingRequest bookingRequest) {
+    private Booking createBooking(BookRoomCommand bookRoomCommand) {
         Booking booking = new Booking();
         booking.setCustomer(new Customer(1, "Lea", "Bildstein", null));
         booking.setRoom(new Room(1, 1, true));
-        booking.setCheckInDate(bookingRequest.getCheckInDate());
-        booking.setCheckOutDate(bookingRequest.getCheckOutDate());
+        booking.setCheckInDate(bookRoomCommand.getCheckInDate());
+        booking.setCheckOutDate(bookRoomCommand.getCheckOutDate());
 
         return booking;
     }

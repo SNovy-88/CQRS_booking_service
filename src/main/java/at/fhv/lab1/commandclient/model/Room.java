@@ -8,7 +8,6 @@ public class Room {
     private int roomNumber;
     private int capacity;
     private List<Booking> bookings;
-
     public Room() {
     }
 

@@ -3,12 +3,12 @@ package at.fhv.lab1.commandclient.model;
 import java.time.LocalDate;
 
 public class Booking {
-    private int bookingID;
+    private long bookingID;
     private Customer customer;
     private Room room;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
-    private int nextBooking = 0;
+    private long nextBooking = 0;
 
     public Booking() {
     }
@@ -21,11 +21,11 @@ public class Booking {
         this.checkOutDate = checkOutDate;
     }
 
-    public int getBookingID() {
+    public long getBookingID() {
         return bookingID;
     }
 
-    public void setBookingID(int bookingID) {
+    public void setBookingID(long bookingID) {
         this.bookingID = bookingID;
     }
 

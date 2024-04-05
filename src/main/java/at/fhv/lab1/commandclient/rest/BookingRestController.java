@@ -1,6 +1,6 @@
-package at.fhv.lab1.commandclient.controller;
+package at.fhv.lab1.commandclient.rest;
 
-import at.fhv.lab1.commandclient.model.BookingRequest;
+import at.fhv.lab1.commandclient.command.BookRoomCommand;
 import at.fhv.lab1.commandclient.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,8 +19,8 @@ public class BookingRestController {
     }
 
     @PostMapping("/book")
-    public String bookRoom(@RequestBody BookingRequest bookingRequest) {
-        if (bookingService.bookRoom(bookingRequest)) {
+    public String bookRoom(@RequestBody BookRoomCommand bookRoomCommand) {
+        if (bookingService.bookRoom(bookRoomCommand)) {
             return "Room booked successfully!";
         } else {
             return "Invalid booking request.";

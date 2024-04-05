@@ -1,7 +1,7 @@
 package at.fhv.lab1.commandclient.service;
 
-import at.fhv.lab1.commandclient.model.BookingRequest;
+import at.fhv.lab1.commandclient.command.BookRoomCommand;
 
 public interface IBookingService {
-    boolean bookRoom(BookingRequest bookingRequest);
+    boolean bookRoom(BookRoomCommand bookRoomCommand);
 }

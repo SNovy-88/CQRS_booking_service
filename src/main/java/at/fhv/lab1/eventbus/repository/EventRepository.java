@@ -1,6 +1,7 @@
 package at.fhv.lab1.eventbus.repository;
 
 import at.fhv.lab1.eventbus.events.Event;
+import at.fhv.lab1.eventbus.events.RoomAddedEvent;
 import at.fhv.lab1.eventbus.events.RoomBookedEvent;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,11 @@ public class EventRepository {
     private final List<Event> events = new ArrayList<>();
 
     public void addRoomBookedEvent(RoomBookedEvent event) {
+        events.add(event);
+        System.out.println("Event added to repository: " + event);
+    }
+
+    public void addRoomAddedEvent(RoomAddedEvent event) {
         events.add(event);
         System.out.println("Event added to repository: " + event);
     }

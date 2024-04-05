@@ -1,32 +1,82 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Booking</title>
 </head>
 <body>
-<h1>Book a room</h1>
-<form id="bookRoomForm">
-    <label for="room">Room ID:
-        <input id="room" name="roomID" required type="number">
-    </label>
-    <label for="room">Customer ID:
-        <input id="customer" name="customerID" required type="number">
-    </label>
-    <label for="checkInDate">
-        Check In Date:
-        <input id="checkInDate" name="checkInDate" required type="date">
-    </label>
-    <label for="checkOutDate">
-        Check Out Date:
-        <input id="checkOutDate" name="checkOutDate" required type="date">
-    </label>
-    <button type="submit" value="Book">Book</button>
+<h1>Find Available Rooms</h1>
+<form id="findRoomsForm">
+    <label for="checkInDate">Check In Date:</label>
+    <input id="checkInDate" name="checkInDate" required type="date"><br>
+
+    <label for="checkOutDate">Check Out Date:</label>
+    <input id="checkOutDate" name="checkOutDate" required type="date"><br>
+
+    <label for="numberOfPersons">Number of Persons:</label>
+    <input id="numberOfPersons" name="numberOfPersons" required type="number" min="1"><br>
+
+    <button type="submit">Find Available Rooms</button>
+
+    <button id="generateMasterDataBtn">Generate Master Data</button>
 </form>
-<h1>Event Management</h1>
-<button id="generateEventBtn">Generate Event</button>
-<button id="clearEventsBtn">Clear All Events</button>
-<button id="generateMasterDataBtn">Generate Master Data</button>
-<ul id="eventsList"></ul>
-<script src="index.js"></script>
+
+<h1>Available Rooms</h1>
+<ul id="availableRooms"></ul>
+
+<script>
+    document.getElementById('findRoomsForm').addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+        const checkInDate = formData.get('checkInDate');
+        const checkOutDate = formData.get('checkOutDate');
+        const numberOfPersons = formData.get('numberOfPersons');
+
+        const response = await fetch(`/freeRooms`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                checkInDate,
+                checkOutDate,
+                numberOfPersons
+            })
+        });
+
+        const availableRooms = await response.json();
+        const availableRoomsList = document.getElementById('availableRooms');
+
+        // Clear existing list items
+        availableRoomsList.innerHTML = '';
+
+        // Add available rooms to the list
+        availableRooms.forEach(room => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `Room Number: ${room.roomNumber}, Beds: ${room.capacity}`;
+            availableRoomsList.appendChild(listItem);
+        });
+    });
+
+    document.getElementById('generateMasterDataBtn').addEventListener('click', function() {
+        // Make a POST request to trigger master data creation
+        fetch('/api/generateMasterData', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.text())
+            .then(message => {
+                alert(message); // Show success message
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to generate master data.'); // Show error message
+            });
+    });
+</script>
 </body>
 </html>

@@ -30,10 +30,10 @@ public class CommandClientApplication {
         SpringApplication.run(CommandClientApplication.class, args);
     }
 
-    @Bean
-    public MasterDataManagementService masterDataManagementService(EventRepository eventRepository, RoomRepository roomRepository, CustomerRepository customerRepository, BookingRepository bookingRepository) {
-        return new MasterDataManagementService(publisher, roomRepository, customerRepository, bookingRepository);
-    }
+//    @Bean
+//    public MasterDataManagementService masterDataManagementService(EventRepository eventRepository, RoomRepository roomRepository, CustomerRepository customerRepository, BookingRepository bookingRepository) {
+//        return new MasterDataManagementService(publisher, roomRepository, customerRepository, bookingRepository);
+//    }
 
     /*@Bean
     public CommandLineRunner run() throws Exception {

@@ -1,8 +1,8 @@
-package at.fhv.lab1.commandclient.model;
+package at.fhv.lab1.commandclient.command;
 
 import java.time.LocalDate;
 
-public class BookingRequest {
+public class BookRoomCommand {
     private int customerID;
     private int roomID;
     private LocalDate checkInDate;

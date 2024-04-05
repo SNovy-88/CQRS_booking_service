@@ -1,4 +1,4 @@
-package at.fhv.lab1.commandclient.controller;
+package at.fhv.lab1.commandclient.rest;
 
 import at.fhv.lab1.commandclient.service.MasterDataManagementService;
 import at.fhv.lab1.eventbus.events.Event;
@@ -35,7 +35,7 @@ public class MasterDataManagementController {
         return new ArrayList<>();
     }
 
-    @PostMapping("/generateMasterData")
+    @GetMapping("/generateMasterData")
     public String createCommandAndQueryModels() {
         masterDataManagementService.createCommandAndQueryModels();
         return "Command and query models created successfully.";

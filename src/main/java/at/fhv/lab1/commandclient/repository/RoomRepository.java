@@ -1,6 +1,9 @@
 package at.fhv.lab1.commandclient.repository;
 
 import at.fhv.lab1.commandclient.model.Room;
+import at.fhv.lab1.eventbus.EventPublisher;
+import at.fhv.lab1.eventbus.events.RoomAddedEvent;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -12,19 +15,18 @@ import java.util.stream.Collectors;
 public class RoomRepository {
 
     private final List<Room> rooms = new ArrayList<>();
+    private final EventPublisher eventPublisher;
+
+    @Autowired
+    public RoomRepository(EventPublisher eventPublisher) {
+        this.eventPublisher = eventPublisher;
+    }
 
     public void addRoom(Room room) {
         rooms.add(room);
-        System.out.println("Room added: " + room);
+        RoomAddedEvent roomAddedEvent = new RoomAddedEvent(room);
+        boolean published = eventPublisher.publishEvent(roomAddedEvent);
+        System.out.println(published);
     }
 
-    public List<Room> getAllRooms() {
-        return rooms;
-    }
-
-    public List<Room> getAllFreeRooms(LocalDate checkInDate, LocalDate checkOutDate) {
-        return rooms.stream()
-                .filter(e -> e.isFree(checkInDate, checkOutDate))
-                .collect(Collectors.toList());
-    }
 }
