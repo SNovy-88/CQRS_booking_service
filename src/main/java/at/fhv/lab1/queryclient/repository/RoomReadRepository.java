@@ -9,22 +9,30 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class RoomReadRepository {
+public class RoomReadRepository implements IRoomReadRepository {
     List<FreeRoom> rooms = new ArrayList<>();
 
+    @Override
     public void addRoom(FreeRoom room) {
         rooms.add(room);
     }
 
+    @Override
     public List<FreeRoom> getRoomsByNumber(long roomNumber) {
         return rooms.stream()
                 .filter(room -> room.getRoomNumber() == roomNumber)
                 .collect(Collectors.toList());
     }
 
+    @Override
     public List<FreeRoom> getFreeRoomsByCapacity(LocalDate checkInDate, LocalDate checkOutDate, int numberOfPersons) {
-        return rooms.stream()
-                .filter(room -> room.getFromDate().isBefore(checkOutDate) && room.getToDate().isAfter(checkInDate) && room.getCapacity() >= numberOfPersons)
-                .collect(Collectors.toList());
+        List<FreeRoom> freeRooms = new ArrayList<>();
+        for (FreeRoom room : rooms) {
+            if (room.getFromDate().isBefore(checkOutDate) && room.getToDate().isAfter(checkInDate) && room.getCapacity() >= numberOfPersons) {
+                freeRooms.add(room);
+                System.out.println("Room: " + room.getRoomNumber());
+            }
+        }
+        return freeRooms;
     }
 }

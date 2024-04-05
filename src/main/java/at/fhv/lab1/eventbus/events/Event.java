@@ -1,18 +1,26 @@
 package at.fhv.lab1.eventbus.events;
 
 public abstract class Event {
+    private static int nextID = 0;
     private int id;
     private long timestamp;
     private String content;
-    private static int nextID = 0;
 
     public Event() {
     }
 
-    public Event(long timestamp, String content) {
+    public Event(String content) {
         this.id = nextID++;
-        this.timestamp = timestamp;
+        this.timestamp = System.currentTimeMillis();
         this.content = content;
+    }
+
+    public static int getNextID() {
+        return nextID;
+    }
+
+    public static void setNextID(int nextID) {
+        Event.nextID = nextID;
     }
 
     public int getId() {
@@ -37,14 +45,6 @@ public abstract class Event {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public static int getNextID() {
-        return nextID;
-    }
-
-    public static void setNextID(int nextID) {
-        Event.nextID = nextID;
     }
 
     @Override

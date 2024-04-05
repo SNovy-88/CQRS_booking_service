@@ -41,8 +41,8 @@ public class RoomQueryService {
         for (FreeRoom room : rooms) {
             LocalDate newToDate = LocalDate.of(2100, 12, 31);
             if (event.getCheckInDate().isBefore(room.getToDate()) && event.getCheckOutDate().isAfter(room.getFromDate())) {
-               newToDate = room.getToDate();
-               room.setToDate(event.getCheckInDate());
+                newToDate = room.getToDate();
+                room.setToDate(event.getCheckInDate());
             }
             roomRepository.addRoom(new FreeRoom(event.getRoom().getRoomNumber(), event.getCheckOutDate(), newToDate, event.getRoom().getCapacity()));
         }

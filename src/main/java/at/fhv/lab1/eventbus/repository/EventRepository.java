@@ -15,12 +15,10 @@ public class EventRepository {
 
     public void addRoomBookedEvent(RoomBookedEvent event) {
         events.add(event);
-        System.out.println("Event added to repository: " + event);
     }
 
     public void addRoomAddedEvent(RoomAddedEvent event) {
         events.add(event);
-        System.out.println("Event added to repository: " + event);
     }
 
     public List<Event> getAllEvents() {

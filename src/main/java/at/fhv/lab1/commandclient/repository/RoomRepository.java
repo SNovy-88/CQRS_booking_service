@@ -6,10 +6,8 @@ import at.fhv.lab1.eventbus.events.RoomAddedEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class RoomRepository {
@@ -22,11 +20,9 @@ public class RoomRepository {
         this.eventPublisher = eventPublisher;
     }
 
-    public void addRoom(Room room) {
+    public Boolean addRoom(Room room) {
         rooms.add(room);
-        RoomAddedEvent roomAddedEvent = new RoomAddedEvent(room);
-        boolean published = eventPublisher.publishEvent(roomAddedEvent);
-        System.out.println(published);
+        return eventPublisher.publishEvent(new RoomAddedEvent(room));
     }
 
 }

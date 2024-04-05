@@ -1,10 +1,11 @@
 package at.fhv.lab1.eventbus.rest;
 
-import at.fhv.lab1.eventbus.EventPublisher;
 import at.fhv.lab1.eventbus.events.Event;
 import at.fhv.lab1.eventbus.events.RoomAddedEvent;
 import at.fhv.lab1.eventbus.events.RoomBookedEvent;
 import at.fhv.lab1.eventbus.repository.EventRepository;
+import at.fhv.lab1.queryclient.service.EventSubscriberService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,11 +14,13 @@ import java.util.List;
 public class EventRestController {
 
     private final EventRepository repository;
-    private final EventPublisher publisher;
+    private final EventSubscriberService eventSubscriberService;
 
-    public EventRestController(EventRepository repository, EventPublisher publisher) {
+
+    @Autowired
+    public EventRestController(EventRepository repository, EventSubscriberService eventSubscriberService) {
         this.repository = repository;
-        this.publisher = publisher;
+        this.eventSubscriberService = eventSubscriberService;
     }
 
     @GetMapping("/event")
@@ -38,8 +41,9 @@ public class EventRestController {
     }
 
     @PostMapping(value = "/roomaddedevent", consumes = "application/json")
-    public boolean addRoomBookedEvent(@RequestBody RoomAddedEvent event) {
+    public Boolean addNewRoomAddedEvent(@RequestBody RoomAddedEvent event) {
         repository.addRoomAddedEvent(event);
+        eventSubscriberService.handleRoomAddedEvent(event);
         return true;
     }
 }

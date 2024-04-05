@@ -1,17 +1,12 @@
 package at.fhv.lab1.commandclient.service;
 
-import at.fhv.lab1.eventbus.EventPublisher;
-import at.fhv.lab1.commandclient.model.Booking;
-import at.fhv.lab1.commandclient.model.Customer;
 import at.fhv.lab1.commandclient.model.Room;
 import at.fhv.lab1.commandclient.repository.BookingRepository;
 import at.fhv.lab1.commandclient.repository.CustomerRepository;
 import at.fhv.lab1.commandclient.repository.RoomRepository;
-import at.fhv.lab1.eventbus.events.*;
+import at.fhv.lab1.eventbus.EventPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
 
 @Service
 public class MasterDataManagementService implements IMasterDataManagementService {
@@ -35,10 +30,11 @@ public class MasterDataManagementService implements IMasterDataManagementService
 
     @Override
     public void createCommandAndQueryModels() {
-        roomRepository.addRoom(new Room(1, 2, true)); // Zimmer mit Zimmernummer 1, Kapazität 2 Personen, Meerblick
-        roomRepository.addRoom(new Room(2, 4, false)); // Zimmer mit Zimmernummer 2, Kapazität 4 Personen, kein Meerblick
-        roomRepository.addRoom(new Room(3, 4, true)); // Zimmer mit Zimmernummer 2, Kapazität 4 Personen, kein Meerblick
-        roomRepository.addRoom(new Room(4, 2, false)); // Zimmer mit Zimmernummer 2, Kapazität 4 Personen, kein Meerblick
-        roomRepository.addRoom(new Room(5, 6, false)); // Zimmer mit Zimmernummer 2, Kapazität 4 Personen, kein Meerblick
+        boolean res1 = roomRepository.addRoom(new Room(1, 2, true));
+        System.out.println("Room 1 added: " + res1);
+        roomRepository.addRoom(new Room(2, 4, false));
+        roomRepository.addRoom(new Room(3, 4, true));
+        roomRepository.addRoom(new Room(4, 2, false));
+        roomRepository.addRoom(new Room(5, 6, false));
     }
 }
