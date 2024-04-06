@@ -1,5 +1,6 @@
 package at.fhv.lab1.queryclient.repository;
 
+import at.fhv.lab1.commandclient.model.Room;
 import at.fhv.lab1.queryclient.model.FreeRoom;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,12 @@ public class RoomReadRepository implements IRoomReadRepository {
     @Override
     public void addRoom(FreeRoom room) {
         rooms.add(room);
+        for(FreeRoom r: rooms){
+            System.out.println(r.getRoomNumber());
+            System.out.println(r.getFromDate());
+        }
+
+
     }
 
     @Override
