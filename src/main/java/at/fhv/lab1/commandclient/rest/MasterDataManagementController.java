@@ -35,7 +35,7 @@ public class MasterDataManagementController {
         return new ArrayList<>();
     }
 
-    @GetMapping("/generateMasterData")
+    @PostMapping("/generateMasterData")
     public String createCommandAndQueryModels() {
         masterDataManagementService.createCommandAndQueryModels();
         return "Command and query models created successfully.";
