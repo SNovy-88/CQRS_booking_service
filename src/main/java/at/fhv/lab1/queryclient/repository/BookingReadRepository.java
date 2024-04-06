@@ -10,13 +10,41 @@
 
 package at.fhv.lab1.queryclient.repository;
 
+import at.fhv.lab1.queryclient.model.BookingProjection;
+import org.springframework.stereotype.Component;
+
 import java.time.LocalDate;
+import java.util.List;
 
-public class BookingReadRepository {
+@Component
+public class BookingReadRepository implements IBookingReadRepository {
+    List<BookingProjection> bookingProjections;
 
-    private LocalDate checkInDate;
-    private LocalDate checkOutDate;
-    private int RoomId;
-    //private int capacity;
+    @Override
+    public Boolean addBooking(BookingProjection bookingProjection) {
+        bookingProjections.add(bookingProjection);
 
+        return true;
+    }
+
+    @Override
+    public Boolean deleteQueryModels() {
+        if (bookingProjections != null && !bookingProjections.isEmpty()) {
+            bookingProjections.clear();
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public List<BookingProjection> getBookingsByDate(LocalDate fromDate, LocalDate toDate) {
+        for (BookingProjection bookingProjection : bookingProjections) {
+            if (bookingProjection.getCheckInDate().isAfter(fromDate) && bookingProjection.getCheckOutDate().isBefore(toDate)) {
+                bookingProjections.add(bookingProjection);
+            }
+        }
+
+        return bookingProjections;
+    }
 }

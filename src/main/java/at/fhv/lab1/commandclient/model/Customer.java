@@ -1,30 +1,29 @@
 package at.fhv.lab1.commandclient.model;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class Customer {
-    private int customerID;
+    private static long nextID = 1;
+    private long customerID;
     private String name;
     private String address;
     private LocalDate birthdate;
-    private List<Booking> bookings;
 
     public Customer() {
     }
 
-    public Customer(int customerID, String name, String address, LocalDate birthdate) {
-        this.customerID = customerID;
+    public Customer(String name, String address, LocalDate birthdate) {
+        this.customerID = nextID++;
         this.name = name;
         this.address = address;
         this.birthdate = birthdate;
     }
 
-    public int getCustomerID() {
+    public long getCustomerID() {
         return customerID;
     }
 
-    public void setCustomerID(int customerID) {
+    public void setCustomerID(long customerID) {
         this.customerID = customerID;
     }
 
@@ -34,14 +33,6 @@ public class Customer {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<Booking> getBookings() {
-        return bookings;
-    }
-
-    public void setBookings(List<Booking> bookings) {
-        this.bookings = bookings;
     }
 
     public String getAddress() {

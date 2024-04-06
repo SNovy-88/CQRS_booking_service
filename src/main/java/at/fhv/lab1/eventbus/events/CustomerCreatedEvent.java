@@ -12,7 +12,7 @@ package at.fhv.lab1.eventbus.events;
 
 import at.fhv.lab1.commandclient.model.Customer;
 
-public class CustomerCreatedEvent extends Event{
+public class CustomerCreatedEvent extends Event {
 
     private Customer customer;
 
@@ -20,7 +20,15 @@ public class CustomerCreatedEvent extends Event{
     }
 
     public CustomerCreatedEvent(Customer customer) {
+        super("New customer created!");
         this.customer = customer;
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 }

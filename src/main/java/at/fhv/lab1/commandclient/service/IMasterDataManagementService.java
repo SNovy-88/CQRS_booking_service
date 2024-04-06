@@ -1,7 +1,9 @@
 package at.fhv.lab1.commandclient.service;
 
 public interface IMasterDataManagementService {
-    void restoreFromEvents();
+    Boolean restoreFromEvents();
 
-    void createCommandAndQueryModels();
+    Boolean createCommandAndQueryModels();
+
+    Boolean deleteQueryModels();
 }

@@ -8,7 +8,7 @@ public class Booking {
     private Room room;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
-    private long nextBooking = 0;
+    private long nextBooking = 1;
 
     public Booking() {
     }

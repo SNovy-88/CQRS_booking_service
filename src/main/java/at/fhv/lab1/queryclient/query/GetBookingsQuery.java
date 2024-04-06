@@ -14,30 +14,30 @@ import java.time.LocalDate;
 
 public class GetBookingsQuery {
 
-    private LocalDate checkInDate;
-    private LocalDate checkOutDate;
+    private LocalDate fromDate;
+    private LocalDate toDate;
 
     public GetBookingsQuery() {
     }
 
-    public GetBookingsQuery(LocalDate checkInDate, LocalDate checkOutDate) {
-        this.checkInDate = checkInDate;
-        this.checkOutDate = checkOutDate;
+    public GetBookingsQuery(LocalDate fromDate, LocalDate toDate) {
+        this.fromDate = fromDate;
+        this.toDate = toDate;
     }
 
-    public LocalDate getCheckInDate() {
-        return checkInDate;
+    public LocalDate getFromDate() {
+        return fromDate;
     }
 
-    public void setCheckInDate(LocalDate checkInDate) {
-        this.checkInDate = checkInDate;
+    public void setFromDate(LocalDate fromDate) {
+        this.fromDate = fromDate;
     }
 
-    public LocalDate getCheckOutDate() {
-        return checkOutDate;
+    public LocalDate getToDate() {
+        return toDate;
     }
 
-    public void setCheckOutDate(LocalDate checkOutDate) {
-        this.checkOutDate = checkOutDate;
+    public void setToDate(LocalDate toDate) {
+        this.toDate = toDate;
     }
 }

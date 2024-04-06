@@ -1,11 +1,11 @@
 package at.fhv.lab1.commandclient.service;
 
-import at.fhv.lab1.commandclient.model.Booking;
+import at.fhv.lab1.commandclient.EventPublisher;
 import at.fhv.lab1.commandclient.command.BookRoomCommand;
+import at.fhv.lab1.commandclient.model.Booking;
 import at.fhv.lab1.commandclient.model.Customer;
 import at.fhv.lab1.commandclient.model.Room;
 import at.fhv.lab1.commandclient.repository.BookingRepository;
-import at.fhv.lab1.eventbus.EventPublisher;
 import at.fhv.lab1.eventbus.events.RoomBookedEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,7 +40,7 @@ public class BookingService implements IBookingService {
 
     private Booking createBooking(BookRoomCommand bookRoomCommand) {
         Booking booking = new Booking();
-        booking.setCustomer(new Customer(1, "Lea", "Bildstein", null));
+        booking.setCustomer(new Customer("Lea", "Bildstein", null));
         booking.setRoom(new Room(1, 1, true));
         booking.setCheckInDate(bookRoomCommand.getCheckInDate());
         booking.setCheckOutDate(bookRoomCommand.getCheckOutDate());

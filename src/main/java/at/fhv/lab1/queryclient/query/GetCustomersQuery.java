@@ -15,6 +15,7 @@ public class GetCustomersQuery {
     private String name;
 
     public GetCustomersQuery() {
+        this.name = "";
     }
 
     public GetCustomersQuery(String name) {

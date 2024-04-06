@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 @SpringBootApplication
 @Configuration
-@ComponentScan({"at.fhv.lab1.commandclient", "at.fhv.lab1.eventbus", "at.fhv.lab1.queryclient.service", "at.fhv.lab1.queryclient.repository"})
+@ComponentScan("at.fhv.lab1.commandclient")
 public class CommandClientApplication {
     public static void main(String[] args) {
         SpringApplication.run(CommandClientApplication.class, args);

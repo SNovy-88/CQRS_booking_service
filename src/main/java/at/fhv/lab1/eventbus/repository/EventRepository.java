@@ -1,8 +1,6 @@
 package at.fhv.lab1.eventbus.repository;
 
-import at.fhv.lab1.eventbus.events.Event;
-import at.fhv.lab1.eventbus.events.RoomAddedEvent;
-import at.fhv.lab1.eventbus.events.RoomBookedEvent;
+import at.fhv.lab1.eventbus.events.*;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -17,7 +15,11 @@ public class EventRepository {
         events.add(event);
     }
 
-    public void addRoomAddedEvent(RoomAddedEvent event) {
+    public void addRoomCreatedEvent(RoomCreatedEvent event) {
+        events.add(event);
+    }
+
+    public void addCustomerCreatedEvent(CustomerCreatedEvent event) {
         events.add(event);
     }
 
@@ -28,6 +30,10 @@ public class EventRepository {
     public void clearEvents() {
         events.clear();
         System.out.println("All events cleared from repository.");
+    }
+
+    public void addQueryModelsDeletedEvent(QueryModelsDeletedEvent event) {
+        events.add(event);
     }
 }
 

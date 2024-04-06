@@ -1,32 +1,35 @@
 package at.fhv.lab1.commandclient.repository;
 
 import at.fhv.lab1.commandclient.model.Booking;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
-public class BookingRepository {
+public class BookingRepository implements IBookingRepository {
 
     private final List<Booking> bookings = new ArrayList<>();
 
-    public void addBooking(Booking booking) {
+    @Override
+    public Boolean addBooking(Booking booking) {
         bookings.add(booking);
-        System.out.println("Booking added: " + booking);
+
+        return true;
     }
 
+    @Override
     public List<Booking> getAllBookings() {
         return bookings;
     }
 
-    public List<Booking> getAllBookingsByDate(LocalDate checkInDate, LocalDate checkOutDate) {
-        return bookings.stream()
-                .filter(e -> e.getCheckInDate().isBefore(checkInDate))
-                .filter(e -> e.getCheckOutDate().isAfter(checkOutDate))
-                .collect(Collectors.toList());
+    @Override
+    public Boolean deleteAllBookings() {
+        if (!bookings.isEmpty() && bookings != null) {
+            bookings.clear();
+            return true;
+        } else {
+            return false;
+        }
     }
 }

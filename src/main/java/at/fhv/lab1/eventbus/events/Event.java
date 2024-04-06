@@ -1,9 +1,11 @@
 package at.fhv.lab1.eventbus.events;
 
+import java.time.LocalDateTime;
+
 public abstract class Event {
-    private static int nextID = 0;
+    private static int nextID = 1;
     private int id;
-    private long timestamp;
+    private LocalDateTime timestamp;
     private String content;
 
     public Event() {
@@ -11,7 +13,7 @@ public abstract class Event {
 
     public Event(String content) {
         this.id = nextID++;
-        this.timestamp = System.currentTimeMillis();
+        this.timestamp = LocalDateTime.now();
         this.content = content;
     }
 
@@ -31,11 +33,11 @@ public abstract class Event {
         this.id = id;
     }
 
-    public long getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(long timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 

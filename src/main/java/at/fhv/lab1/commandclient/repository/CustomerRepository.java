@@ -7,16 +7,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class CustomerRepository {
+public class CustomerRepository implements ICustomerRepository {
 
     private final List<Customer> customers = new ArrayList<>();
 
-    public void addCustomer(Customer customer) {
+    @Override
+    public Boolean addCustomer(Customer customer) {
+        if (customer == null) {
+            return false;
+        }
+
         customers.add(customer);
-        System.out.println("Customer added: " + customer);
+        return true;
     }
 
-    public List<Customer> getAllBookings() {
+    @Override
+    public List<Customer> getAllCustomers() {
         return customers;
+    }
+
+    @Override
+    public Boolean deleteAllCustomers() {
+        if (!customers.isEmpty() && customers != null) {
+            customers.clear();
+            return true;
+        } else {
+            return false;
+        }
     }
 }

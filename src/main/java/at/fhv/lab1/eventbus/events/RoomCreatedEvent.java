@@ -1,29 +1,27 @@
-/*
- * Copyright (c) 2024 Sarah N
- *
- * Project Name:         lab1template
- * Description:
- *
- * Date of Creation/
- * Last Update:          03/04/2024
- */
-
 package at.fhv.lab1.eventbus.events;
 
 import at.fhv.lab1.commandclient.model.Room;
 
-public class RoomCreatedEvent extends Event{
-
-    private Room room;
-
-    public RoomCreatedEvent() {
-    }
+public class RoomCreatedEvent extends Event {
+    private final Room room;
 
     public RoomCreatedEvent(Room room) {
+        super("New room with room number " + room.getRoomNumber() + " created.");
         this.room = room;
     }
 
+    public RoomCreatedEvent() {
+        this.room = new Room();
+    }
 
+    public Room getRoom() {
+        return room;
+    }
 
-
+    @Override
+    public String toString() {
+        return "RoomAddedEvent{" +
+                "room=" + room +
+                '}';
+    }
 }
