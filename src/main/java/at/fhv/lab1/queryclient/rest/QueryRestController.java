@@ -22,16 +22,21 @@ import at.fhv.lab1.queryclient.query.GetFreeRoomsQuery;
 import at.fhv.lab1.queryclient.service.BookingQueryService;
 import at.fhv.lab1.queryclient.service.CustomerQueryService;
 import at.fhv.lab1.queryclient.service.RoomQueryService;
+<<<<<<< HEAD
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+=======
+import org.springframework.web.bind.annotation.*;
+>>>>>>> 5ea20cbf30939c200f4a97fce85da3e8ae9ba113
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/query")
 public class QueryRestController {
     private final RoomQueryService roomQueryService;
     private final CustomerQueryService customerQueryService;
@@ -70,7 +75,7 @@ public class QueryRestController {
         return roomQueryService.bookRoom(event);
     }
 
-    @GetMapping(value = "/freeRooms", consumes = "application/json")
+    @PostMapping(value = "/freeRooms", consumes = "application/json")
     public List<FreeRoom> getFreeRooms(@RequestBody GetFreeRoomsQuery query) {
         List<FreeRoom> freeRooms = roomQueryService.getFreeRooms(query.getCheckInDate(), query.getCheckOutDate(), query.getCapacity());
 

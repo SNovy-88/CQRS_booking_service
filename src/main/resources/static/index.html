@@ -17,25 +17,25 @@
     <label for="numberOfPersons">Number of Persons:</label>
     <input id="numberOfPersons" name="numberOfPersons" required type="number" min="1"><br>
 
-    <button type="submit">Find Available Rooms</button>
+    <button type="button" id="findRoomsBtn">Find Available Rooms</button>
 
-    <button id="generateMasterDataBtn">Generate Master Data</button>
+    <button type="button" id="generateMasterDataBtn">Generate Master Data</button>
 </form>
 
 <h1>Available Rooms</h1>
 <ul id="availableRooms"></ul>
 
-<script>
-    document.getElementById('findRoomsForm').addEventListener('submit', async function (event) {
-        event.preventDefault();
 
-        const formData = new FormData(this);
+<script>
+    document.getElementById('findRoomsBtn').addEventListener('click', async function (event) {
+
+        const formData = new FormData(document.getElementById('findRoomsForm'));
         const checkInDate = formData.get('checkInDate');
         const checkOutDate = formData.get('checkOutDate');
         const numberOfPersons = formData.get('numberOfPersons');
 
-        const response = await fetch(`/freeRooms`, {
-            method: 'GET',
+        const response = await fetch('/query/freeRooms', {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -48,7 +48,6 @@
 
         const availableRooms = await response.json();
         const availableRoomsList = document.getElementById('availableRooms');
-
         // Clear existing list items
         availableRoomsList.innerHTML = '';
 
