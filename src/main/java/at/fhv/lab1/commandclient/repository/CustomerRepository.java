@@ -22,11 +22,6 @@ public class CustomerRepository implements ICustomerRepository {
     }
 
     @Override
-    public List<Customer> getAllCustomers() {
-        return customers;
-    }
-
-    @Override
     public Boolean deleteAllCustomers() {
         if (!customers.isEmpty() && customers != null) {
             customers.clear();
@@ -34,5 +29,15 @@ public class CustomerRepository implements ICustomerRepository {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public Customer getCustomerById(long customerId) {
+        for (Customer customer : customers) {
+            if (customer.getCustomerID() == customerId) {
+                return customer;
+            }
+        }
+        return null;
     }
 }

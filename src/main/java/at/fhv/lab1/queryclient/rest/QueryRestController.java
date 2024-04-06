@@ -1,15 +1,6 @@
-/*
- * Copyright (c) 2024 Sarah N
- *
- * Project Name:         lab1template
- * Description:
- *
- * Date of Creation/
- * Last Update:          03/04/2024
- */
-
 package at.fhv.lab1.queryclient.rest;
 
+import at.fhv.lab1.eventbus.events.BookingCanceledEvent;
 import at.fhv.lab1.eventbus.events.CustomerCreatedEvent;
 import at.fhv.lab1.eventbus.events.RoomBookedEvent;
 import at.fhv.lab1.eventbus.events.RoomCreatedEvent;
@@ -22,21 +13,16 @@ import at.fhv.lab1.queryclient.query.GetFreeRoomsQuery;
 import at.fhv.lab1.queryclient.service.BookingQueryService;
 import at.fhv.lab1.queryclient.service.CustomerQueryService;
 import at.fhv.lab1.queryclient.service.RoomQueryService;
-<<<<<<< HEAD
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-=======
-import org.springframework.web.bind.annotation.*;
->>>>>>> 5ea20cbf30939c200f4a97fce85da3e8ae9ba113
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/query")
 public class QueryRestController {
     private final RoomQueryService roomQueryService;
     private final CustomerQueryService customerQueryService;
@@ -72,7 +58,20 @@ public class QueryRestController {
 
     @PostMapping(value = "/roomBookedEvent", consumes = "application/json")
     public Boolean handleRoomBookedEvent(@RequestBody RoomBookedEvent event) {
-        return roomQueryService.bookRoom(event);
+        Boolean success = false;
+        success = bookingQueryService.addBookingToRepository(event);
+        success = roomQueryService.bookRoom(event);
+
+        return success;
+    }
+
+    @PostMapping(value = "bookingCanceledEvent", consumes = "application/json")
+    public Boolean handleBookingCanceledEvent(@RequestBody BookingCanceledEvent event) {
+        Boolean success = false;
+        success = bookingQueryService.cancelBooking(event);
+        success = roomQueryService.cancelBooking(event);
+
+        return success;
     }
 
     @PostMapping(value = "/freeRooms", consumes = "application/json")
@@ -82,7 +81,14 @@ public class QueryRestController {
         return freeRooms;
     }
 
-    @GetMapping(value = "/bookings", consumes = "application/json")
+    @GetMapping(value = "/freeRooms")
+    public List<FreeRoom> getFreeRooms() {
+        List<FreeRoom> freeRooms = roomQueryService.getAllFreeRooms();
+
+        return freeRooms;
+    }
+
+    @PostMapping(value = "/bookings")
     public List<BookingProjection> getBookings(@RequestBody GetBookingsQuery query) {
         List<BookingProjection> bookings = bookingQueryService.getBookingsByDate(query.getFromDate(), query.getToDate());
 

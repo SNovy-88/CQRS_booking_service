@@ -32,4 +32,20 @@ public class BookingRepository implements IBookingRepository {
             return false;
         }
     }
+
+    @Override
+    public Booking getBookingById(long bookingID) {
+        for (Booking booking : bookings) {
+            if (booking.getBookingID() == bookingID) {
+                return booking;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Boolean cancelBooking(Booking booking) {
+        bookings.remove(booking);
+        return true;
+    }
 }

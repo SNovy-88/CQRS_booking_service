@@ -36,6 +36,13 @@ public class EventRestController {
         return true;
     }
 
+    @PostMapping(value = "/bookingcanceledevent", consumes = "application/json")
+    public Boolean handleBookingCanceledEvent(@RequestBody BookingCanceledEvent event) {
+        repository.addBookingCanceledEvent(event);
+        eventPublisher.publishEvent(event);
+        return true;
+    }
+
     @PostMapping(value = "/roomcreatedevent", consumes = "application/json")
     public Boolean handleRoomCreatedEvent(@RequestBody RoomCreatedEvent event) {
         repository.addRoomCreatedEvent(event);

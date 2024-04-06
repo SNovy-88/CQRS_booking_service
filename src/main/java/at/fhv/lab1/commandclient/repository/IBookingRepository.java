@@ -10,4 +10,8 @@ public interface IBookingRepository {
     List<Booking> getAllBookings();
 
     Boolean deleteAllBookings();
+
+    Booking getBookingById(long bookingID);
+
+    Boolean cancelBooking(Booking booking);
 }

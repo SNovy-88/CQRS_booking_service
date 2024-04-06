@@ -1,5 +1,7 @@
 package at.fhv.lab1.queryclient.service;
 
+import at.fhv.lab1.eventbus.events.BookingCanceledEvent;
+import at.fhv.lab1.eventbus.events.RoomBookedEvent;
 import at.fhv.lab1.queryclient.model.BookingProjection;
 import at.fhv.lab1.queryclient.repository.BookingReadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,8 @@ public class BookingQueryService implements IBookingQueryService {
     }
 
     @Override
-    public Boolean addBookingToRepository(BookingProjection bookingProjection) {
+    public Boolean addBookingToRepository(RoomBookedEvent event) {
+        BookingProjection bookingProjection = new BookingProjection(event.getBooking().getBookingID(), event.getBooking().getCustomer().getCustomerID(), event.getBooking().getRoom().getId(), event.getBooking().getCheckInDate(), event.getBooking().getCheckOutDate());
         return bookingReadRepository.addBooking(bookingProjection);
     }
 
@@ -30,5 +33,10 @@ public class BookingQueryService implements IBookingQueryService {
     @Override
     public List<BookingProjection> getBookingsByDate(LocalDate fromDate, LocalDate toDate) {
         return bookingReadRepository.getBookingsByDate(fromDate, toDate);
+    }
+
+    @Override
+    public Boolean cancelBooking(BookingCanceledEvent event) {
+        return bookingReadRepository.cancelBooking(event.getBooking().getBookingID());
     }
 }

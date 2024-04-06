@@ -32,7 +32,6 @@ public class RoomReadRepository implements IRoomReadRepository {
         for (FreeRoom room : this.freeRooms) {
             if (room.getFromDate().isBefore(checkOutDate) && room.getToDate().isAfter(checkInDate) && room.getCapacity() >= numberOfPersons) {
                 freeRooms.add(room);
-                System.out.println("Room: " + room.getRoomNumber());
             }
         }
         return freeRooms;
@@ -47,5 +46,15 @@ public class RoomReadRepository implements IRoomReadRepository {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public List<FreeRoom> getAllFreeRooms() {
+        return freeRooms;
+    }
+
+    @Override
+    public void deleteRoom(FreeRoom freeRoom2) {
+        freeRooms.remove(freeRoom2);
     }
 }

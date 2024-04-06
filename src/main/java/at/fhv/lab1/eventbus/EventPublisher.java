@@ -15,10 +15,10 @@ public class EventPublisher {
     public EventPublisher() {
     }
 
-    public Boolean publishEvent(Event event) {
+    public Boolean publishEvent(RoomBookedEvent event) {
         return localApiClient
                 .post()
-                .uri("/event")
+                .uri("/roomBookedEvent")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .body(Mono.just(event), Event.class)
@@ -27,10 +27,10 @@ public class EventPublisher {
                 .block();
     }
 
-    public Boolean publishEvent(RoomBookedEvent event) {
+    public Boolean publishEvent(BookingCanceledEvent event) {
         return localApiClient
                 .post()
-                .uri("/roomBokedEvent")
+                .uri("bookingCanceledEvent")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .body(Mono.just(event), Event.class)

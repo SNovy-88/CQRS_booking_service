@@ -20,7 +20,7 @@ public class CustomerCreatedEvent extends Event {
     }
 
     public CustomerCreatedEvent(Customer customer) {
-        super("New customer created!");
+        super("New customer with ID " + customer.getCustomerID() + " created!");
         this.customer = customer;
     }
 

@@ -2,24 +2,24 @@ package at.fhv.lab1.commandclient.model;
 
 public class Room {
     boolean oceanView;
-    private int roomNumber;
+    private int id;
     private int capacity;
 
     public Room() {
     }
 
-    public Room(int roomNumber, int capacity, boolean oceanView) {
-        this.roomNumber = roomNumber;
+    public Room(int id, int capacity, boolean oceanView) {
+        this.id = id;
         this.capacity = capacity;
         this.oceanView = oceanView;
     }
 
-    public int getRoomNumber() {
-        return roomNumber;
+    public int getId() {
+        return id;
     }
 
-    public void setRoomNumber(int roomNumber) {
-        this.roomNumber = roomNumber;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getCapacity() {

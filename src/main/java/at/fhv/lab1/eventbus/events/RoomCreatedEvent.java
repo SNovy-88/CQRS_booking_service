@@ -6,7 +6,7 @@ public class RoomCreatedEvent extends Event {
     private final Room room;
 
     public RoomCreatedEvent(Room room) {
-        super("New room with room number " + room.getRoomNumber() + " created.");
+        super("New room with room number " + room.getId() + " created.");
         this.room = room;
     }
 

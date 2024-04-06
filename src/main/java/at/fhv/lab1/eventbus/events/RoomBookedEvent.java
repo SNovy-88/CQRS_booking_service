@@ -19,7 +19,7 @@ public class RoomBookedEvent extends Event {
     }
 
     public RoomBookedEvent(Booking booking) {
-        super("New booking event for room: " + booking.getRoom().getRoomNumber() + " by customer: " + booking.getCustomer().getName());
+        super("New booking event for room: " + booking.getRoom().getId() + " by customer: " + booking.getCustomer().getName());
         this.booking = booking;
     }
 

@@ -6,4 +6,6 @@ public interface IRoomRepository {
     Boolean addRoom(Room room);
 
     Boolean deleteAllRooms();
+
+    Room getRoomById(long roomId);
 }

@@ -6,4 +6,6 @@ public interface IBookingReadRepository {
     Boolean addBooking(BookingProjection bookingProjection);
 
     Boolean deleteQueryModels();
+
+    Boolean cancelBooking(long bookingID);
 }

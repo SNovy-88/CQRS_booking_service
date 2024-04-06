@@ -27,12 +27,11 @@ public class EventRepository {
         return new ArrayList<>(events);
     }
 
-    public void clearEvents() {
-        events.clear();
-        System.out.println("All events cleared from repository.");
+    public void addQueryModelsDeletedEvent(QueryModelsDeletedEvent event) {
+        events.add(event);
     }
 
-    public void addQueryModelsDeletedEvent(QueryModelsDeletedEvent event) {
+    public void addBookingCanceledEvent(BookingCanceledEvent event) {
         events.add(event);
     }
 }

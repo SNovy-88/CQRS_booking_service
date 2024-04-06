@@ -8,13 +8,12 @@ public class BookingProjection {
     private long roomNumber;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
-    private long nextBookingProjection = 0;
 
     public BookingProjection() {
     }
 
-    public BookingProjection(long customerID, long roomNumber, LocalDate checkInDate, LocalDate checkOutDate) {
-        this.bookingID = nextBookingProjection++;
+    public BookingProjection(long bookingID, long customerID, long roomNumber, LocalDate checkInDate, LocalDate checkOutDate) {
+        this.bookingID = bookingID;
         this.customerID = customerID;
         this.roomNumber = roomNumber;
         this.checkInDate = checkInDate;
@@ -43,14 +42,6 @@ public class BookingProjection {
 
     public void setRoomNumber(long roomNumber) {
         this.roomNumber = roomNumber;
-    }
-
-    public long getNextBookingProjection() {
-        return nextBookingProjection;
-    }
-
-    public void setNextBookingProjection(long nextBookingProjection) {
-        this.nextBookingProjection = nextBookingProjection;
     }
 
     public LocalDate getCheckInDate() {

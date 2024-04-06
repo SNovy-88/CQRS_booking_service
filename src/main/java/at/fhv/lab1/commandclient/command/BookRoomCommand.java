@@ -3,24 +3,24 @@ package at.fhv.lab1.commandclient.command;
 import java.time.LocalDate;
 
 public class BookRoomCommand {
-    private int customerID;
-    private int roomID;
+    private long customerID;
+    private long roomID;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
 
-    public int getCustomerID() {
+    public long getCustomerID() {
         return customerID;
     }
 
-    public void setCustomerID(int customerID) {
+    public void setCustomerID(long customerID) {
         this.customerID = customerID;
     }
 
-    public int getRoomID() {
+    public long getRoomID() {
         return roomID;
     }
 
-    public void setRoomID(int roomID) {
+    public void setRoomID(long roomID) {
         this.roomID = roomID;
     }
 
