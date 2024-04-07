@@ -61,7 +61,7 @@
 
     document.getElementById('generateMasterDataBtn').addEventListener('click', function() {
         // Make a POST request to trigger master data creation
-        fetch('/api/generateMasterData', {
+        fetch('/masterdata', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
