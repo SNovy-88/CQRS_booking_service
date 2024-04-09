@@ -26,7 +26,7 @@ public class MasterDataManagementController {
 
     @DeleteMapping("/masterdata")
     public String deleteQueryModels() {
-        if (masterDataManagementService.deleteQueryModels()) {
+        if (masterDataManagementService.deleteModels()) {
             return "Query models deleted successfully.";
         } else {
             return "Query models deletion failed.";
