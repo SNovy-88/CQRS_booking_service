@@ -1,13 +1,11 @@
 package at.fhv.lab1.eventbus.rest;
 
+import at.fhv.lab1.eventbus.EventService;
 import at.fhv.lab1.eventbus.EventPublisher;
 import at.fhv.lab1.eventbus.events.*;
 import at.fhv.lab1.eventbus.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,12 +14,14 @@ public class EventRestController {
 
     private final EventRepository repository;
     private final EventPublisher eventPublisher;
+    private final EventService eventService;
 
 
     @Autowired
-    public EventRestController(EventRepository repository, EventPublisher eventPublisher) {
+    public EventRestController(EventRepository repository, EventPublisher eventPublisher, EventService eventService) {
         this.repository = repository;
         this.eventPublisher = eventPublisher;
+        this.eventService = eventService;
     }
 
     @GetMapping("/event")
@@ -61,6 +61,33 @@ public class EventRestController {
     public Boolean handleQueryModelsDeletedEvent(@RequestBody QueryModelsDeletedEvent event) {
         repository.addQueryModelsDeletedEvent(event);
         eventPublisher.publishEvent(event);
+        return true;
+    }
+
+    @CrossOrigin(origins = "http://localhost:8081")
+    @PostMapping(value= "restoreQueryModelsEvent", consumes = "application/json")
+    public Boolean handleRestoreQueryModelsEvent(){
+        List<Event> events = eventService.restoreReadSideData();
+
+        //Todo let make another PublishEvent method with Event as parameter
+        for (Event event : events) {
+            if (event instanceof RoomBookedEvent) {
+                RoomBookedEvent roomBookedEvent = (RoomBookedEvent) event;
+                eventPublisher.publishEvent(roomBookedEvent);
+            } else if (event instanceof BookingCanceledEvent) {
+                BookingCanceledEvent bookingCanceledEvent = (BookingCanceledEvent) event;
+                eventPublisher.publishEvent(bookingCanceledEvent);
+            } else if (event instanceof RoomCreatedEvent) {
+                RoomCreatedEvent roomCreatedEvent = (RoomCreatedEvent) event;
+                eventPublisher.publishEvent(roomCreatedEvent);
+            } else if (event instanceof CustomerCreatedEvent) {
+                CustomerCreatedEvent customerCreatedEvent = (CustomerCreatedEvent) event;
+                eventPublisher.publishEvent(customerCreatedEvent);
+            } else if (event instanceof QueryModelsDeletedEvent) {
+                QueryModelsDeletedEvent queryModelsDeletedEvent = (QueryModelsDeletedEvent) event;
+                eventPublisher.publishEvent(queryModelsDeletedEvent);
+            }
+        }
         return true;
     }
 }
