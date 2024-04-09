@@ -29,13 +29,13 @@ public class BookingReadRepository implements IBookingReadRepository {
     }
 
     @Override
-    public Boolean deleteQueryModels() {
+    public boolean deleteQueryModels() {
         if (bookingProjections != null && !bookingProjections.isEmpty()) {
             bookingProjections.clear();
 
             return true;
         } else {
-            return false;
+            return bookingProjections.isEmpty();
         }
     }
 
