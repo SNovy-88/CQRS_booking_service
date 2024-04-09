@@ -14,10 +14,7 @@ import at.fhv.lab1.queryclient.service.BookingQueryService;
 import at.fhv.lab1.queryclient.service.CustomerQueryService;
 import at.fhv.lab1.queryclient.service.RoomQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,15 +42,14 @@ public class QueryRestController {
         return customerQueryService.addCustomerToRepository(event);
     }
 
+    @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping(value = "/queryModelsDeletedEvent", consumes = "application/json")
-    public Boolean handleQueryModelsDeletedEvent() {
-        Boolean success = false;
+    public boolean handleQueryModelsDeletedEvent() {
+       boolean success = roomQueryService.deleteQueryModels();
+       boolean success2 = customerQueryService.deleteQueryModels();
+       boolean success3 = bookingQueryService.deleteQueryModels();
 
-        success = roomQueryService.deleteQueryModels();
-        success = customerQueryService.deleteQueryModels();
-        success = bookingQueryService.deleteQueryModels();
-
-        return success;
+        return success && success2 && success3;
     }
 
     @PostMapping(value = "/roomBookedEvent", consumes = "application/json")
@@ -74,6 +70,7 @@ public class QueryRestController {
         return success;
     }
 
+     @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping(value = "/freeRooms", consumes = "application/json")
     public List<FreeRoom> getFreeRooms(@RequestBody GetFreeRoomsQuery query) {
         List<FreeRoom> freeRooms = roomQueryService.getFreeRooms(query.getCheckInDate(), query.getCheckOutDate(), query.getCapacity());
