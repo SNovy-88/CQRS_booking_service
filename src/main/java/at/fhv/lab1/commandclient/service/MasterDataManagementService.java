@@ -74,7 +74,7 @@ public class MasterDataManagementService implements IMasterDataManagementService
     }
 
     @Override
-    public Boolean deleteQueryModels() {
+    public Boolean deleteModels() {
         Boolean success = false;
 
         success = roomRepository.deleteAllRooms();

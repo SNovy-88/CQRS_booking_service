@@ -5,5 +5,5 @@ public interface IMasterDataManagementService {
 
     Boolean createCommandAndQueryModels();
 
-    Boolean deleteQueryModels();
+    Boolean deleteModels();
 }
