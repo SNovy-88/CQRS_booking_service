@@ -20,6 +20,10 @@
     <button type="button" id="findRoomsBtn">Find Available Rooms</button>
 
     <button type="button" id="generateMasterDataBtn">Generate Master Data</button>
+
+    <br>
+    <button type="button" id="deleteQueryModelBtn">Delete Query Model</button>
+    <button type="button" id="restoreQueryModelBtn">Restore Query Model</button>
 </form>
 
 <h1>Available Rooms</h1>
@@ -34,7 +38,7 @@
         const checkOutDate = formData.get('checkOutDate');
         const numberOfPersons = formData.get('numberOfPersons');
 
-        const response = await fetch('/query/freeRooms', {
+        const response = await fetch('http://localhost:8082/freeRooms', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -74,6 +78,42 @@
             .catch(error => {
                 console.error('Error:', error);
                 alert('Failed to generate master data.'); // Show error message
+            });
+    });
+
+    document.getElementById('deleteQueryModelBtn').addEventListener('click', function() {
+        // Make a DELETE request to delete the query model
+        fetch('http://localhost:8082/queryModelsDeletedEvent', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(message => {
+                alert(message); // Show success message
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to delete the query model.'); // Show error message
+            });
+    });
+
+    document.getElementById('restoreQueryModelBtn').addEventListener('click', function() {
+        // Make a POST request to restore the query model
+        fetch('http://localhost:8080/restoreQueryModelsEvent', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.text())
+            .then(message => {
+                alert(message); // Show success message
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to restore the query model.'); // Show error message
             });
     });
 </script>
