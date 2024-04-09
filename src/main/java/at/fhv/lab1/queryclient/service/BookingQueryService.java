@@ -26,7 +26,7 @@ public class BookingQueryService implements IBookingQueryService {
     }
 
     @Override
-    public Boolean deleteQueryModels() {
+    public boolean deleteQueryModels() {
         return bookingReadRepository.deleteQueryModels();
     }
 

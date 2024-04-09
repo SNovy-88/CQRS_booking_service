@@ -15,7 +15,7 @@ public interface IRoomQueryService {
 
     Boolean bookRoom(RoomBookedEvent event);
 
-    Boolean deleteQueryModels();
+    boolean deleteQueryModels();
 
     List<FreeRoom> getAllFreeRooms();
 

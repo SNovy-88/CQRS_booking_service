@@ -5,7 +5,7 @@ import at.fhv.lab1.queryclient.model.BookingProjection;
 public interface IBookingReadRepository {
     Boolean addBooking(BookingProjection bookingProjection);
 
-    Boolean deleteQueryModels();
+    boolean deleteQueryModels();
 
     Boolean cancelBooking(long bookingID);
 }

@@ -8,7 +8,7 @@ import java.util.List;
 public interface ICustomerQueryService {
     Boolean addCustomerToRepository(CustomerCreatedEvent event);
 
-    Boolean deleteQueryModels();
+    boolean deleteQueryModels();
 
     List<CustomerProjection> getCustomersByName(String name);
 

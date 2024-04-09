@@ -12,7 +12,7 @@ public interface IRoomReadRepository {
 
     List<FreeRoom> getRoomsByNumber(long roomNumber);
 
-    Boolean deleteQueryModels();
+    boolean deleteQueryModels();
 
     List<FreeRoom> getAllFreeRooms();
 

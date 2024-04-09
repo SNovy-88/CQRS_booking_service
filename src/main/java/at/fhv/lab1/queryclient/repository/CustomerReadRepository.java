@@ -19,8 +19,8 @@ public class CustomerReadRepository implements ICustomerReadRepository {
     }
 
     @Override
-    public Boolean deleteQueryModels() {
-        if (customers.isEmpty() && customers != null) {
+    public boolean deleteQueryModels() {
+        if (!customers.isEmpty() && customers != null) {
             customers.clear();
 
             return true;

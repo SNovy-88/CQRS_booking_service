@@ -99,7 +99,7 @@ public class RoomQueryService implements IRoomQueryService {
     }
 
     @Override
-    public Boolean deleteQueryModels() {
+    public boolean deleteQueryModels() {
         return roomRepository.deleteQueryModels();
     }
 

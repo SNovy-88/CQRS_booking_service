@@ -11,7 +11,7 @@ public interface IBookingQueryService {
 
     Boolean addBookingToRepository(RoomBookedEvent event);
 
-    Boolean deleteQueryModels();
+    boolean deleteQueryModels();
 
     List<BookingProjection> getBookingsByDate(LocalDate fromDate, LocalDate toDate);
 

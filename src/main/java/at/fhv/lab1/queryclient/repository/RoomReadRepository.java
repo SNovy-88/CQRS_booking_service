@@ -38,8 +38,8 @@ public class RoomReadRepository implements IRoomReadRepository {
     }
 
     @Override
-    public Boolean deleteQueryModels() {
-        if (freeRooms.isEmpty() && freeRooms != null) {
+    public boolean deleteQueryModels() {
+        if (!freeRooms.isEmpty() && freeRooms != null) {
             freeRooms.clear();
 
             return true;

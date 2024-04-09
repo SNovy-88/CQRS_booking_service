@@ -7,7 +7,7 @@ import java.util.List;
 public interface ICustomerReadRepository {
     Boolean addCustomer(CustomerProjection customerProjection);
 
-    Boolean deleteQueryModels();
+    boolean deleteQueryModels();
 
     List<CustomerProjection> getCustomersByName(String name);
 

@@ -30,7 +30,7 @@ public class CustomerQueryService implements ICustomerQueryService {
     }
 
     @Override
-    public Boolean deleteQueryModels() {
+    public boolean deleteQueryModels() {
         return customerReadRepository.deleteQueryModels();
     }
 
