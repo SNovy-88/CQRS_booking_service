@@ -32,13 +32,4 @@ public class MasterDataManagementController {
             return "Query models deletion failed.";
         }
     }
-
-    @PostMapping("/restore-from-events")
-    public String restoreFromEvents() {
-        if (masterDataManagementService.restoreFromEvents()) {
-            return "System state restored from events.";
-        } else {
-            return "System state restoration failed.";
-        }
-    }
 }
