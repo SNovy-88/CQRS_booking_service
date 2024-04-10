@@ -3,7 +3,7 @@ package at.fhv.lab1.queryclient.service;
 import at.fhv.lab1.eventbus.events.BookingCanceledEvent;
 import at.fhv.lab1.eventbus.events.RoomBookedEvent;
 import at.fhv.lab1.eventbus.events.RoomCreatedEvent;
-import at.fhv.lab1.queryclient.model.FreeRoom;
+import at.fhv.lab1.queryclient.projection.FreeRoom;
 
 import java.time.LocalDate;
 import java.util.List;

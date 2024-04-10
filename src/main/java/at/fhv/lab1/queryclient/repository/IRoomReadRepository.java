@@ -1,6 +1,6 @@
 package at.fhv.lab1.queryclient.repository;
 
-import at.fhv.lab1.queryclient.model.FreeRoom;
+import at.fhv.lab1.queryclient.projection.FreeRoom;
 
 import java.time.LocalDate;
 import java.util.List;
