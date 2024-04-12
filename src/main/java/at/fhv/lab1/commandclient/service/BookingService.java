@@ -47,6 +47,20 @@ public class BookingService implements IBookingService {
     }
 
     private Boolean validateBookingRequest(BookRoomCommand bookRoomCommand) {
+        if (bookRoomCommand.getCheckInDate().isAfter(bookRoomCommand.getCheckOutDate())) {
+            return false;
+        }
+
+        Room room = roomRepository.getRoomById(bookRoomCommand.getRoomID());
+        if (room == null) {
+            return false;
+        }
+
+        Customer customer = customerRepository.getCustomerById(bookRoomCommand.getCustomerID());
+        if (customer == null) {
+            return false;
+        }
+
         for (Booking booking : bookingRepository.getAllBookings()) {
             if (booking.getRoom().getId() == bookRoomCommand.getRoomID()) {
                 if (booking.getCheckInDate().isBefore(bookRoomCommand.getCheckOutDate()) && booking.getCheckOutDate().isAfter(bookRoomCommand.getCheckInDate())) {

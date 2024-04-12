@@ -1,6 +1,6 @@
 package at.fhv.lab1.queryclient.repository;
 
-import at.fhv.lab1.queryclient.model.CustomerProjection;
+import at.fhv.lab1.queryclient.projection.CustomerProjection;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

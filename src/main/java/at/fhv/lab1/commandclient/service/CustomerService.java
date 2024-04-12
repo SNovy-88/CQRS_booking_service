@@ -23,17 +23,47 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public Boolean createCustomer(CreateCustomerCommand createCustomerCommand) {
-        String name = createCustomerCommand.getName();
-        String address = createCustomerCommand.getAddress();
-        LocalDate birthDate = createCustomerCommand.getBirthDate();
-        Customer customer = new Customer(name, address, birthDate);
-
-        if (customerRepository.addCustomer(customer)) {
-            CustomerCreatedEvent customerCreatedEvent = new CustomerCreatedEvent(customer);
-            eventPublisher.publishEvent(customerCreatedEvent);
-            return true;
+        if (!validateCreateCustomer(createCustomerCommand)) {
+            return false;
         } else {
+            String name = createCustomerCommand.getName();
+            String address = createCustomerCommand.getAddress();
+            LocalDate birthDate = createCustomerCommand.getBirthDate();
+            Customer customer = new Customer(name, address, birthDate);
+
+            if (customerRepository.addCustomer(customer)) {
+                CustomerCreatedEvent customerCreatedEvent = new CustomerCreatedEvent(customer);
+                eventPublisher.publishEvent(customerCreatedEvent);
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    private Boolean validateCreateCustomer(CreateCustomerCommand createCustomerCommand) {
+        if (createCustomerCommand.getName() == null || createCustomerCommand.getName().isEmpty()) {
             return false;
         }
+
+        if (createCustomerCommand.getAddress() == null || createCustomerCommand.getAddress().isEmpty()) {
+            return false;
+        }
+
+        if (createCustomerCommand.getBirthDate() == null) {
+            return false;
+        }
+
+        if (createCustomerCommand.getBirthDate().isAfter(LocalDate.now())) {
+            return false;
+        }
+
+        for (Customer customer : customerRepository.getCustomers()) {
+            if (customer.getName().equals(createCustomerCommand.getName())) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

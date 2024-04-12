@@ -1,6 +1,6 @@
 package at.fhv.lab1.queryclient.repository;
 
-import at.fhv.lab1.queryclient.model.FreeRoom;
+import at.fhv.lab1.queryclient.projection.FreeRoom;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
