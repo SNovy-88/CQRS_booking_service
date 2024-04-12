@@ -47,9 +47,9 @@ public class QueryRestController {
     @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping(value = "/queryModelsDeletedEvent", consumes = "application/json")
     public boolean handleQueryModelsDeletedEvent() {
-       boolean success = roomQueryService.deleteQueryModels();
-       boolean success2 = customerQueryService.deleteQueryModels();
-       boolean success3 = bookingQueryService.deleteQueryModels();
+        boolean success = roomQueryService.deleteQueryModels();
+        boolean success2 = customerQueryService.deleteQueryModels();
+        boolean success3 = bookingQueryService.deleteQueryModels();
 
         return success && success2 && success3;
     }
@@ -74,7 +74,7 @@ public class QueryRestController {
         return success;
     }
 
-     @CrossOrigin(origins = "http://localhost:8081")
+    @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping(value = "/freeRooms", consumes = "application/json")
     public List<FreeRoom> getFreeRooms(@RequestBody GetFreeRoomsQuery query) {
         List<FreeRoom> freeRooms = roomQueryService.getFreeRooms(query.getCheckInDate(), query.getCheckOutDate(), query.getCapacity());
