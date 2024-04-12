@@ -32,11 +32,13 @@ public class QueryRestController {
         this.bookingQueryService = bookingQueryService;
     }
 
+    @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping(value = "/roomCreatedEvent", consumes = "application/json")
     public Boolean handleRoomCreatedEvent(@RequestBody RoomCreatedEvent event) {
         return roomQueryService.addRoomToRepository(event);
     }
 
+    @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping(value = "/customerCreatedEvent", consumes = "application/json")
     public Boolean handleCustomerCreatedEvent(@RequestBody CustomerCreatedEvent event) {
         return customerQueryService.addCustomerToRepository(event);
@@ -52,6 +54,7 @@ public class QueryRestController {
         return success && success2 && success3;
     }
 
+    @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping(value = "/roomBookedEvent", consumes = "application/json")
     public Boolean handleRoomBookedEvent(@RequestBody RoomBookedEvent event) {
         Boolean success = false;
@@ -61,6 +64,7 @@ public class QueryRestController {
         return success;
     }
 
+    @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping(value = "bookingCanceledEvent", consumes = "application/json")
     public Boolean handleBookingCanceledEvent(@RequestBody BookingCanceledEvent event) {
         Boolean success = false;
@@ -78,6 +82,7 @@ public class QueryRestController {
         return freeRooms;
     }
 
+    @CrossOrigin(origins = "http://localhost:8081")
     @GetMapping(value = "/freeRooms")
     public List<FreeRoom> getFreeRooms() {
         List<FreeRoom> freeRooms = roomQueryService.getAllFreeRooms();
@@ -85,6 +90,7 @@ public class QueryRestController {
         return freeRooms;
     }
 
+    @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping(value = "/bookings")
     public List<BookingProjection> getBookings(@RequestBody GetBookingsQuery query) {
         List<BookingProjection> bookings = bookingQueryService.getBookingsByDate(query.getFromDate(), query.getToDate());
@@ -92,6 +98,7 @@ public class QueryRestController {
         return bookings;
     }
 
+    @CrossOrigin(origins = "http://localhost:8081")
     @GetMapping(value = "/customers", consumes = "application/json")
     public List<CustomerProjection> getBookings(@RequestBody GetCustomersQuery query) {
         List<CustomerProjection> customers = new ArrayList<>();

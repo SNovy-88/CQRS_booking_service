@@ -2,6 +2,7 @@ package at.fhv.lab1.commandclient.rest;
 
 import at.fhv.lab1.commandclient.service.MasterDataManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,7 @@ public class MasterDataManagementController {
         this.masterDataManagementService = masterDataManagementService;
     }
 
+    @CrossOrigin(origins = "http://localhost:8082")
     @PostMapping("/masterdata")
     public String createCommandAndQueryModels() {
         if (masterDataManagementService.createCommandAndQueryModels()) {
@@ -27,9 +29,9 @@ public class MasterDataManagementController {
     @DeleteMapping("/masterdata")
     public String deleteQueryModels() {
         if (masterDataManagementService.deleteModels()) {
-            return "Query models deleted successfully.";
+            return "Models deleted successfully.";
         } else {
-            return "Query models deletion failed.";
+            return "Models deletion failed.";
         }
     }
 
