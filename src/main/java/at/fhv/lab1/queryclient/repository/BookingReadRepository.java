@@ -10,7 +10,7 @@
 
 package at.fhv.lab1.queryclient.repository;
 
-import at.fhv.lab1.queryclient.model.BookingProjection;
+import at.fhv.lab1.queryclient.projection.BookingProjection;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;

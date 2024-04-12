@@ -1,4 +1,4 @@
-package at.fhv.lab1.queryclient.model;
+package at.fhv.lab1.queryclient.projection;
 
 import java.time.LocalDate;
 

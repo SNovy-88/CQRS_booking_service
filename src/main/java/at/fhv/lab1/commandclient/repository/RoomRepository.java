@@ -38,4 +38,9 @@ public class RoomRepository implements IRoomRepository {
         }
         return null;
     }
+
+    @Override
+    public List<Room> getRooms() {
+        return rooms;
+    }
 }

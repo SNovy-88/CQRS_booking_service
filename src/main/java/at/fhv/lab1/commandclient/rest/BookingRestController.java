@@ -5,6 +5,8 @@ import at.fhv.lab1.commandclient.command.CancelBookingCommand;
 import at.fhv.lab1.commandclient.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,11 +22,11 @@ public class BookingRestController {
 
     @CrossOrigin(origins = "http://localhost:8082")
     @PostMapping("/book")
-    public String bookRoom(@RequestBody BookRoomCommand bookRoomCommand) {
+    public ResponseEntity<String> bookRoom(@RequestBody BookRoomCommand bookRoomCommand) {
         if (bookingService.bookRoom(bookRoomCommand)) {
-            return "Room booked successfully!";
+            return ResponseEntity.ok("Room booked successfully!");
         } else {
-            return "Invalid booking request.";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid booking request.");
         }
     }
 

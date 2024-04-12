@@ -2,7 +2,7 @@ package at.fhv.lab1.queryclient.service;
 
 import at.fhv.lab1.eventbus.events.BookingCanceledEvent;
 import at.fhv.lab1.eventbus.events.RoomBookedEvent;
-import at.fhv.lab1.queryclient.model.BookingProjection;
+import at.fhv.lab1.queryclient.projection.BookingProjection;
 import at.fhv.lab1.queryclient.repository.BookingReadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

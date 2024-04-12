@@ -1,11 +1,13 @@
 package at.fhv.lab1.commandclient.service;
 
 import at.fhv.lab1.commandclient.EventPublisher;
+import at.fhv.lab1.commandclient.model.Booking;
 import at.fhv.lab1.commandclient.model.Customer;
 import at.fhv.lab1.commandclient.model.Room;
 import at.fhv.lab1.commandclient.repository.BookingRepository;
 import at.fhv.lab1.commandclient.repository.CustomerRepository;
 import at.fhv.lab1.commandclient.repository.RoomRepository;
+import at.fhv.lab1.eventbus.events.BookingCreatedEvent;
 import at.fhv.lab1.eventbus.events.CustomerCreatedEvent;
 import at.fhv.lab1.eventbus.events.QueryModelsDeletedEvent;
 import at.fhv.lab1.eventbus.events.RoomCreatedEvent;
@@ -27,12 +29,6 @@ public class MasterDataManagementService implements IMasterDataManagementService
         this.roomRepository = roomRepository;
         this.customerRepository = customerRepository;
         this.bookingRepository = bookingRepository;
-    }
-
-    @Override
-    public Boolean restoreFromEvents() {
-        // Logik zur Wiederherstellung des Zustands aus Events im Event-Store
-        return true;
     }
 
     @Override
@@ -69,6 +65,26 @@ public class MasterDataManagementService implements IMasterDataManagementService
         Customer customer3 = new Customer("Bob Johnson", "789 Oak St, Metropolis, USA", LocalDate.of(1975, 3, 10));
         customerRepository.addCustomer(customer3);
         eventPublisher.publishEvent(new CustomerCreatedEvent(customer3));
+
+        Booking booking1 = new Booking(customer1, room1, LocalDate.of(2024, 5, 1), LocalDate.of(2024, 5, 5));
+        bookingRepository.addBooking(booking1);
+        eventPublisher.publishEvent(new BookingCreatedEvent(booking1));
+
+        Booking booking2 = new Booking(customer2, room2, LocalDate.of(2024, 5, 12), LocalDate.of(2024, 5, 20));
+        bookingRepository.addBooking(booking2);
+        eventPublisher.publishEvent(new BookingCreatedEvent(booking2));
+
+        Booking booking3 = new Booking(customer3, room3, LocalDate.of(2024, 7, 1), LocalDate.of(2024, 7, 10));
+        bookingRepository.addBooking(booking3);
+        eventPublisher.publishEvent(new BookingCreatedEvent(booking3));
+
+        Booking booking4 = new Booking(customer1, room4, LocalDate.of(2024, 6, 22), LocalDate.of(2024, 6, 30));
+        bookingRepository.addBooking(booking4);
+        eventPublisher.publishEvent(new BookingCreatedEvent(booking4));
+
+        Booking booking5 = new Booking(customer2, room5, LocalDate.of(2024, 7, 15), LocalDate.of(2024, 7, 20));
+        bookingRepository.addBooking(booking5);
+        eventPublisher.publishEvent(new BookingCreatedEvent(booking5));
 
         return true;
     }

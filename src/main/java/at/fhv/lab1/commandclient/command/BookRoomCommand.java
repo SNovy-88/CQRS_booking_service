@@ -39,4 +39,14 @@ public class BookRoomCommand {
     public void setCheckOutDate(LocalDate checkOutDate) {
         this.checkOutDate = checkOutDate;
     }
+
+    @Override
+    public String toString() {
+        return "BookRoomCommand{" +
+                "customerID=" + customerID +
+                ", roomID=" + roomID +
+                ", checkInDate=" + checkInDate +
+                ", checkOutDate=" + checkOutDate +
+                '}';
+    }
 }
