@@ -6,25 +6,55 @@
     <title>Room Booking</title>
 </head>
 <body>
-<h1>Find Available Rooms</h1>
-<form id="findRoomsForm">
-    <label for="checkInDate">Check In Date:</label>
-    <input id="checkInDate" name="checkInDate" required type="date"><br>
 
-    <label for="checkOutDate">Check Out Date:</label>
-    <input id="checkOutDate" name="checkOutDate" required type="date"><br>
+<div id="formContainer" style="display:flex; margin-left: 50px;">
+    <form id="findRoomsForm">
+        <h1>Find Available Rooms</h1>
+        <label for="checkInDate">Check In Date:
+        <input id="checkInDate" name="checkInDate" required type="date"><br>
+        </label>
 
-    <label for="numberOfPersons">Number of Persons:</label>
-    <input id="numberOfPersons" name="numberOfPersons" required type="number" min="1"><br>
+        <label for="checkOutDate">Check Out Date:
+        <input id="checkOutDate" name="checkOutDate" required type="date"><br>
+        </label>
 
-    <button type="button" id="findRoomsBtn">Find Available Rooms</button>
+        <label for="numberOfPersons">Number of Persons:
+        <input id="numberOfPersons" name="numberOfPersons" required type="number" min="1"><br>
+        </label>
 
-    <button type="button" id="generateMasterDataBtn">Generate Master Data</button>
+        <button type="button" id="findRoomsBtn">Find Available Rooms</button>
 
-    <br>
-    <button type="button" id="deleteQueryModelBtn">Delete Query Model</button>
-    <button type="button" id="restoreQueryModelBtn">Restore Query Model</button>
-</form>
+
+    </form>
+    <form id="bookRoomForm" style="margin-left: 50px;">
+        <h1>Book Room</h1>
+        <label for="bookingCustomerId">Customer ID:
+            <input id="bookingCustomerId" name="customerID" required type="number" min="1"><br>
+        </label>
+
+        <label for="bookingRoomId">Room Number:
+            <input id="bookingRoomId" name="roomID" required type="number" min="1"><br>
+        </label>
+
+        <label for="bookingCheckInDate">Check In Date:
+            <input id="bookingCheckInDate" name="checkInDate" required type="date"><br>
+        </label>
+
+        <label for="bookingCheckOutDate">Check Out Date:
+            <input id="bookingCheckOutDate" name="checkOutDate" required type="date"><br>
+        </label>
+
+        <button type="button" id="bookRoomBtn">Book Room</button>
+    </form>
+    <div style="margin-left: 50px;">
+        <h1>Generate Masterdata</h1>
+        <button type="button" id="generateMasterDataBtn">Generate Master Data</button>
+
+        <br>
+        <button type="button" id="deleteQueryModelBtn">Delete Query Model</button>
+        <button type="button" id="restoreQueryModelBtn">Restore Query Model</button>
+    </div>
+</div>
 
 <h1>Available Rooms</h1>
 <ul id="availableRooms"></ul>
@@ -61,6 +91,35 @@
             listItem.textContent = `Room Number: ${room.roomNumber}, Beds: ${room.capacity}`;
             availableRoomsList.appendChild(listItem);
         });
+    });
+
+    document.getElementById('bookRoomBtn').addEventListener('click', function () {
+        const formData = new FormData(document.getElementById('bookRoomForm'));
+        const customerId = formData.get('customerID');
+        const roomId = formData.get('roomID');
+        const checkInDate = formData.get('checkInDate');
+        const checkOutDate = formData.get('checkOutDate');
+
+        const response = fetch('http://localhost:8081/book', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                customerId,
+                roomId,
+                checkInDate,
+                checkOutDate
+            })
+        })
+            .then(response => response.text())
+            .then(message => {
+                alert(message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to book the room.');
+            })
     });
 
     document.getElementById('generateMasterDataBtn').addEventListener('click', function() {
