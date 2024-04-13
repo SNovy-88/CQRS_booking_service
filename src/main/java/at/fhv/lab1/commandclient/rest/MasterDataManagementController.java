@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MasterDataManagementController {
     private final MasterDataManagementService masterDataManagementService;
+    private boolean masterDataGenerated= false;
 
     @Autowired
     public MasterDataManagementController(MasterDataManagementService masterDataManagementService) {
@@ -19,11 +20,15 @@ public class MasterDataManagementController {
     @CrossOrigin(origins = "http://localhost:8082")
     @PostMapping("/masterdata")
     public String createCommandAndQueryModels() {
-        if (masterDataManagementService.createCommandAndQueryModels()) {
-            return "Command and query models created successfully.";
-        } else {
-            return "Command and query models creation failed.";
+        if (!masterDataGenerated) {
+            if (masterDataManagementService.createCommandAndQueryModels()) {
+                masterDataGenerated = true;
+                return "Command and query models created successfully.";
+            } else {
+                return "Command and query models creation failed.";
+            }
         }
+        return "Command and query models already created.";
     }
 
     @DeleteMapping("/masterdata")
