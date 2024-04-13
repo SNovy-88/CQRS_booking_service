@@ -69,6 +69,7 @@ public class EventRestController {
         List<Event> events = eventService.restoreReadSideData();
 
         //Todo let make another PublishEvent method with Event as parameter
+        //Todo check what queryModelsDeletedEvent does
         for (Event event : events) {
             if (event instanceof RoomBookedEvent) {
                 RoomBookedEvent roomBookedEvent = (RoomBookedEvent) event;
