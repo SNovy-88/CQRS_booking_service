@@ -88,7 +88,6 @@ public class MasterDataManagementService implements IMasterDataManagementService
         eventPublisher.publishEvent(new RoomBookedEvent(booking5));
 
         System.out.println("booking Repository: in MasterDataManagementService after adding Bookings:");
-        bookingRepository.getAllBookings().forEach(System.out::println);
 
         return true;
     }
