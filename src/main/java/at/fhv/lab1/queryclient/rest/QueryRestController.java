@@ -8,6 +8,7 @@ import at.fhv.lab1.queryclient.projection.BookingProjection;
 import at.fhv.lab1.queryclient.projection.CustomerProjection;
 import at.fhv.lab1.queryclient.projection.FreeRoom;
 import at.fhv.lab1.queryclient.query.GetBookingsQuery;
+import at.fhv.lab1.queryclient.query.GetCustomerByNameQuery;
 import at.fhv.lab1.queryclient.query.GetCustomersQuery;
 import at.fhv.lab1.queryclient.query.GetFreeRoomsQuery;
 import at.fhv.lab1.queryclient.service.BookingQueryService;
@@ -32,19 +33,16 @@ public class QueryRestController {
         this.bookingQueryService = bookingQueryService;
     }
 
-    @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping(value = "/roomCreatedEvent", consumes = "application/json")
     public Boolean handleRoomCreatedEvent(@RequestBody RoomCreatedEvent event) {
         return roomQueryService.addRoomToRepository(event);
     }
 
-    @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping(value = "/customerCreatedEvent", consumes = "application/json")
     public Boolean handleCustomerCreatedEvent(@RequestBody CustomerCreatedEvent event) {
         return customerQueryService.addCustomerToRepository(event);
     }
 
-    @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping(value = "/queryModelsDeletedEvent", consumes = "application/json")
     public boolean handleQueryModelsDeletedEvent() {
         boolean success = roomQueryService.deleteQueryModels();
@@ -54,7 +52,6 @@ public class QueryRestController {
         return success && success2 && success3;
     }
 
-    @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping(value = "/roomBookedEvent", consumes = "application/json")
     public Boolean handleRoomBookedEvent(@RequestBody RoomBookedEvent event) {
         Boolean success1 = false;
@@ -64,7 +61,6 @@ public class QueryRestController {
         return success1 && success2;
     }
 
-    @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping(value = "bookingCanceledEvent", consumes = "application/json")
     public Boolean handleBookingCanceledEvent(@RequestBody BookingCanceledEvent event) {
         Boolean success = false;
@@ -74,8 +70,7 @@ public class QueryRestController {
         return success;
     }
 
-    @CrossOrigin(origins = "http://localhost:8081")
-    @GetMapping(value = "/freeRooms", consumes = "application/json")
+    @PostMapping(value = "/freeRooms", consumes = "application/json")
     public List<FreeRoom> getFreeRooms(@RequestBody GetFreeRoomsQuery query) {
         List<FreeRoom> freeRooms = new ArrayList<>();
         if (query.getCheckInDate() == null || query.getCheckOutDate() == null || query.getCapacity() == 0) {
@@ -86,7 +81,6 @@ public class QueryRestController {
         return freeRooms;
     }
 
-    @CrossOrigin(origins = "http://localhost:8081")
     @GetMapping(value = "/bookingsByDate", consumes = "application/json")
     public List<BookingProjection> getBookings(@RequestBody GetBookingsQuery query) {
         List<BookingProjection> bookings = bookingQueryService.getBookingsByDate(query.getFromDate(), query.getToDate());
@@ -94,7 +88,6 @@ public class QueryRestController {
         return bookings;
     }
 
-    @CrossOrigin(origins = "http://localhost:8081")
     @GetMapping(value = "/bookings", consumes = "application/json")
     public List<BookingProjection> getAllBookings() {
         List<BookingProjection> bookings = bookingQueryService.getAllBookings();
@@ -102,9 +95,8 @@ public class QueryRestController {
         return bookings;
     }
 
-    @CrossOrigin(origins = "http://localhost:8081")
-    @GetMapping(value = "/customers", consumes = "application/json")
-    public List<CustomerProjection> getCustomers(@RequestBody GetCustomersQuery query) {
+    @GetMapping(value = "/customerByName", consumes = "application/json")
+    public List<CustomerProjection> getCustomersByName(@RequestBody GetCustomerByNameQuery query) {
         List<CustomerProjection> customers = new ArrayList<>();
         if (query.getName() != null && !query.getName().isEmpty()) {
             customers = customerQueryService.getCustomersByName(query.getName());
@@ -114,4 +106,11 @@ public class QueryRestController {
 
         return customers;
     }
+
+    @GetMapping(value = "/customers", consumes = "application/json")
+    public List<CustomerProjection> getCustomers() {
+        List<CustomerProjection> allCustomers = customerQueryService.getAllCustomers();
+        return allCustomers;
+    }
+
 }
