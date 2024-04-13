@@ -64,7 +64,6 @@ public class EventRestController {
         return true;
     }
 
-    @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping(value= "restoreQueryModelsEvent", consumes = "application/json")
     public Boolean handleRestoreQueryModelsEvent(){
         List<Event> events = eventService.restoreReadSideData();
@@ -83,10 +82,10 @@ public class EventRestController {
             } else if (event instanceof CustomerCreatedEvent) {
                 CustomerCreatedEvent customerCreatedEvent = (CustomerCreatedEvent) event;
                 eventPublisher.publishEvent(customerCreatedEvent);
-            } else if (event instanceof QueryModelsDeletedEvent) {
+            } /*else if (event instanceof QueryModelsDeletedEvent) {
                 QueryModelsDeletedEvent queryModelsDeletedEvent = (QueryModelsDeletedEvent) event;
                 eventPublisher.publishEvent(queryModelsDeletedEvent);
-            }
+            }*/
         }
         return true;
     }
