@@ -104,7 +104,7 @@ public class QueryRestController {
 
     @CrossOrigin(origins = "http://localhost:8081")
     @GetMapping(value = "/customers", consumes = "application/json")
-    public List<CustomerProjection> getBookings(@RequestBody GetCustomersQuery query) {
+    public List<CustomerProjection> getCustomers(@RequestBody GetCustomersQuery query) {
         List<CustomerProjection> customers = new ArrayList<>();
         if (query.getName() != null && !query.getName().isEmpty()) {
             customers = customerQueryService.getCustomersByName(query.getName());
