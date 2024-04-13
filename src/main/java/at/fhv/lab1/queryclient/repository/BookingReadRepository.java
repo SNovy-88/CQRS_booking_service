@@ -25,7 +25,6 @@ public class BookingReadRepository implements IBookingReadRepository {
     public Boolean addBooking(BookingProjection bookingProjection) {
         bookingProjections.add(bookingProjection);
         System.out.println("Booking added to repository");
-        bookingProjections.forEach(System.out::println);
         return true;
     }
 
@@ -50,9 +49,9 @@ public class BookingReadRepository implements IBookingReadRepository {
         List<BookingProjection> bookingProjectionList = new ArrayList<>();
         for (BookingProjection bookingProjection : bookingProjections) {
             if ((bookingProjection.getCheckInDate().isAfter(fromDate) ||
-                    bookingProjection.getCheckOutDate().isEqual(fromDate)) &&
-                    (bookingProjection.getCheckOutDate().isBefore(toDate)) ||
-                    bookingProjection.getCheckOutDate().isEqual(toDate)) {
+                    bookingProjection.getCheckInDate().isEqual(fromDate)) &&
+                    (bookingProjection.getCheckOutDate().isBefore(toDate) ||
+                    bookingProjection.getCheckOutDate().isEqual(toDate))) {
                 bookingProjectionList.add(bookingProjection);
             }
         }
