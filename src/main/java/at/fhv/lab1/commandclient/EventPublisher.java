@@ -51,18 +51,6 @@ public class EventPublisher {
                 .block();
     }
 
-    public Boolean publishEvent(BookingCreatedEvent event) {
-        return localApiClient
-                .post()
-                .uri("/roomcreatedevent")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .body(Mono.just(event), Event.class)
-                .retrieve()
-                .bodyToMono(Boolean.class)
-                .block();
-    }
-
     public Boolean publishEvent(CustomerCreatedEvent event) {
         return localApiClient
                 .post()

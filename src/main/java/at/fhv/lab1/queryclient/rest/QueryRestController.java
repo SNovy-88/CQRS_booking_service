@@ -47,9 +47,9 @@ public class QueryRestController {
     @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping(value = "/queryModelsDeletedEvent", consumes = "application/json")
     public boolean handleQueryModelsDeletedEvent() {
-       boolean success = roomQueryService.deleteQueryModels();
-       boolean success2 = customerQueryService.deleteQueryModels();
-       boolean success3 = bookingQueryService.deleteQueryModels();
+        boolean success = roomQueryService.deleteQueryModels();
+        boolean success2 = customerQueryService.deleteQueryModels();
+        boolean success3 = bookingQueryService.deleteQueryModels();
 
         return success && success2 && success3;
     }
@@ -74,24 +74,20 @@ public class QueryRestController {
         return success;
     }
 
-     @CrossOrigin(origins = "http://localhost:8081")
-    @PostMapping(value = "/freeRooms", consumes = "application/json")
+    @CrossOrigin(origins = "http://localhost:8081")
+    @GetMapping(value = "/freeRooms", consumes = "application/json")
     public List<FreeRoom> getFreeRooms(@RequestBody GetFreeRoomsQuery query) {
-        List<FreeRoom> freeRooms = roomQueryService.getFreeRooms(query.getCheckInDate(), query.getCheckOutDate(), query.getCapacity());
-
+        List<FreeRoom> freeRooms = new ArrayList<>();
+        if (query.getCheckInDate() == null || query.getCheckOutDate() == null || query.getCapacity() == 0) {
+            freeRooms = roomQueryService.getAllFreeRooms();
+        } else {
+            freeRooms = roomQueryService.getFreeRooms(query.getCheckInDate(), query.getCheckOutDate(), query.getCapacity());
+        }
         return freeRooms;
     }
 
     @CrossOrigin(origins = "http://localhost:8081")
-    @GetMapping(value = "/freeRooms")
-    public List<FreeRoom> getFreeRooms() {
-        List<FreeRoom> freeRooms = roomQueryService.getAllFreeRooms();
-
-        return freeRooms;
-    }
-
-    @CrossOrigin(origins = "http://localhost:8081")
-    @PostMapping(value = "/bookings")
+    @GetMapping(value = "/bookings")
     public List<BookingProjection> getBookings(@RequestBody GetBookingsQuery query) {
         List<BookingProjection> bookings = bookingQueryService.getBookingsByDate(query.getFromDate(), query.getToDate());
 
