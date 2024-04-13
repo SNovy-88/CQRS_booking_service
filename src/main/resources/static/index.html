@@ -66,32 +66,43 @@
         const formData = new FormData(document.getElementById('findRoomsForm'));
         const checkInDate = formData.get('checkInDate');
         const checkOutDate = formData.get('checkOutDate');
-        const numberOfPersons = formData.get('numberOfPersons');
+        const capacity = parseInt(formData.get('numberOfPersons'));
 
-        const response = await fetch('http://localhost:8082/freeRooms', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                checkInDate,
-                checkOutDate,
-                numberOfPersons
-            })
-        });
+        try {
+            const response = await fetch('http://localhost:8082/freeRooms', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    checkInDate,
+                    checkOutDate,
+                    capacity
+                })
+            });
 
-        const availableRooms = await response.json();
-        const availableRoomsList = document.getElementById('availableRooms');
-        // Clear existing list items
-        availableRoomsList.innerHTML = '';
-
-        // Add available rooms to the list
-        availableRooms.forEach(room => {
-            const listItem = document.createElement('li');
-            listItem.textContent = `Room Number: ${room.roomNumber}, Beds: ${room.capacity}`;
-            availableRoomsList.appendChild(listItem);
-        });
+            const availableRooms = await response.json();
+            displayFreeRooms(availableRooms)
+        } catch (error) {
+            console.error('Error fetching free rooms:', error);
+            alert('Failed to find available rooms. Please try again later.');
+        }
     });
+
+    function displayFreeRooms(rooms){
+        if(Array.isArray(rooms)) {
+            const availableRoomsList = document.getElementById('availableRooms');
+            // Clear existing list items
+            availableRoomsList.innerHTML = '';
+
+            // Add available rooms to the list
+            rooms.forEach(room => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `Room Number: ${room.roomNumber}, Beds: ${room.capacity}`;
+                availableRoomsList.appendChild(listItem);
+            });
+        }
+    }
 
     document.getElementById('bookRoomBtn').addEventListener('click', function () {
         const formData = new FormData(document.getElementById('bookRoomForm'));
