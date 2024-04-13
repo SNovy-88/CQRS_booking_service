@@ -57,11 +57,11 @@ public class QueryRestController {
     @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping(value = "/roomBookedEvent", consumes = "application/json")
     public Boolean handleRoomBookedEvent(@RequestBody RoomBookedEvent event) {
-        Boolean success = false;
-        success = bookingQueryService.addBookingToRepository(event);
-        success = roomQueryService.bookRoom(event);
+        Boolean success1 = false;
+        success1 = bookingQueryService.addBookingToRepository(event);
+        Boolean success2 = roomQueryService.bookRoom(event);
 
-        return success;
+        return success1 && success2;
     }
 
     @CrossOrigin(origins = "http://localhost:8081")
@@ -87,9 +87,17 @@ public class QueryRestController {
     }
 
     @CrossOrigin(origins = "http://localhost:8081")
-    @GetMapping(value = "/bookings")
+    @GetMapping(value = "/bookingsByDate", consumes = "application/json")
     public List<BookingProjection> getBookings(@RequestBody GetBookingsQuery query) {
         List<BookingProjection> bookings = bookingQueryService.getBookingsByDate(query.getFromDate(), query.getToDate());
+
+        return bookings;
+    }
+
+    @CrossOrigin(origins = "http://localhost:8081")
+    @GetMapping(value = "/bookings", consumes = "application/json")
+    public List<BookingProjection> getAllBookings() {
+        List<BookingProjection> bookings = bookingQueryService.getAllBookings();
 
         return bookings;
     }

@@ -36,6 +36,11 @@ public class BookingQueryService implements IBookingQueryService {
     }
 
     @Override
+    public List<BookingProjection> getAllBookings() {
+        return bookingReadRepository.getAllBookings();
+    }
+
+    @Override
     public Boolean cancelBooking(BookingCanceledEvent event) {
         return bookingReadRepository.cancelBooking(event.getBooking().getBookingID());
     }
