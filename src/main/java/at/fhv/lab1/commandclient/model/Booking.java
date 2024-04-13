@@ -60,15 +60,4 @@ public class Booking {
     public void setCheckOutDate(LocalDate checkOutDate) {
         this.checkOutDate = checkOutDate;
     }
-
-    @Override
-    public String toString() {
-        return "Booking{" +
-                "bookingID=" + bookingID +
-                ", customer=" + customer.getCustomerID() +
-                ", room=" + room.getId() +
-                ", checkInDate=" + checkInDate +
-                ", checkOutDate=" + checkOutDate +
-                '}';
-    }
 }
