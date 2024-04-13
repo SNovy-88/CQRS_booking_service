@@ -12,21 +12,5 @@ package at.fhv.lab1.queryclient.query;
 
 public class GetCustomersQuery {
 
-    private String name;
 
-    public GetCustomersQuery() {
-        this.name = "";
-    }
-
-    public GetCustomersQuery(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }
