@@ -71,7 +71,7 @@ public class QueryRestController {
         return success;
     }
 
-    @GetMapping(value = "/freeRooms", consumes = "application/json")
+    @PostMapping(value = "/freeRooms", consumes = "application/json")
     public List<FreeRoom> getFreeRooms(@RequestBody GetFreeRoomsQuery query) {
         List<FreeRoom> freeRooms;
         if (query.getCheckInDate() == null || query.getCheckOutDate() == null || query.getCapacity() == 0) {
@@ -82,7 +82,7 @@ public class QueryRestController {
         return freeRooms;
     }
 
-    @GetMapping(value = "/bookingsByDate", consumes = "application/json")
+    @PostMapping(value = "/bookingsByDate", consumes = "application/json")
     public List<BookingProjection> getBookings(@RequestBody GetBookingsQuery query) {
         List<BookingProjection> bookings = bookingQueryService.getBookingsByDate(query.getFromDate(), query.getToDate());
 
@@ -96,7 +96,7 @@ public class QueryRestController {
         return bookings;
     }
 
-    @GetMapping(value = "/customerByName", consumes = "application/json")
+    @PostMapping(value = "/customerByName", consumes = "application/json")
     public List<CustomerProjection> getCustomersByName(@RequestBody GetCustomerByNameQuery query) {
         List<CustomerProjection> customers;
         if (query.getName() != null && !query.getName().isEmpty()) {

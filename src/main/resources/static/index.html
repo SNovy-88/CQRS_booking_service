@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Room Booking</title>
 </head>
 <body>
@@ -11,29 +11,27 @@
     <form id="findRoomsForm">
         <h1>Find Available Rooms</h1>
         <label for="checkInDate">Check In Date:
-        <input id="checkInDate" name="checkInDate" required type="date"><br>
+            <input id="checkInDate" name="checkInDate" required type="date"><br>
         </label>
 
         <label for="checkOutDate">Check Out Date:
-        <input id="checkOutDate" name="checkOutDate" required type="date"><br>
+            <input id="checkOutDate" name="checkOutDate" required type="date"><br>
         </label>
 
         <label for="numberOfPersons">Number of Persons:
-        <input id="numberOfPersons" name="numberOfPersons" required type="number" min="1"><br>
+            <input id="numberOfPersons" min="1" name="numberOfPersons" required type="number"><br>
         </label>
 
-        <button type="button" id="findRoomsBtn">Find Available Rooms</button>
-
-
+        <button id="findRoomsBtn" type="button">Find Available Rooms</button>
     </form>
     <form id="bookRoomForm" style="margin-left: 50px;">
         <h1>Book Room</h1>
         <label for="bookingCustomerId">Customer ID:
-            <input id="bookingCustomerId" name="customerID" required type="number" min="1"><br>
+            <input id="bookingCustomerId" min="1" name="customerID" required type="number"><br>
         </label>
 
         <label for="bookingRoomId">Room Number:
-            <input id="bookingRoomId" name="roomID" required type="number" min="1"><br>
+            <input id="bookingRoomId" min="1" name="roomID" required type="number"><br>
         </label>
 
         <label for="bookingCheckInDate">Check In Date:
@@ -44,21 +42,39 @@
             <input id="bookingCheckOutDate" name="checkOutDate" required type="date"><br>
         </label>
 
-        <button type="button" id="bookRoomBtn">Book Room</button>
+        <button id="bookRoomBtn" type="button">Book Room</button>
     </form>
     <div style="margin-left: 50px;">
         <h1>Generate Masterdata</h1>
-        <button type="button" id="generateMasterDataBtn">Generate Master Data</button>
+        <button id="generateMasterDataBtn" type="button">Generate Master Data</button>
 
         <br>
-        <button type="button" id="deleteQueryModelBtn">Delete Query Model</button>
-        <button type="button" id="restoreQueryModelBtn">Restore Query Model</button>
+        <button id="deleteQueryModelBtn" type="button">Delete Query Model</button>
+        <button id="restoreQueryModelBtn" type="button">Restore Query Model</button>
     </div>
 </div>
 
-<h1>Available Rooms</h1>
-<ul id="availableRooms"></ul>
+<div style="margin-top: 50px; margin-left: 50px;">
+    <div style="display: inline-block;">
+        <h1>Customer Operations</h1>
+        <button id="getAllCustomersBtn" type="button">Get All Customers</button>
+        <br>
+        <label for="customerName">Customer Name:</label>
+        <input id="customerName" type="text">
+        <button id="getCustomersByNameBtn" type="button">Get Customers by Name</button>
+    </div>
 
+    <div style="margin-left: 150px; display: inline-block;">
+        <h1>Booking Operations</h1>
+        <label for="bookingFromDate">From:</label>
+        <input id="bookingFromDate" type="date">
+        <label for="bookingToDate">To:</label>
+        <input id="bookingToDate" type="date">
+        <button id="getBookingsByDateBtn" type="button">Get Bookings by Date</button>
+        <br>
+        <button id="getAllBookingsBtn" type="button">Get All Bookings</button>
+    </div>
+</div>
 
 <script>
     document.getElementById('findRoomsBtn').addEventListener('click', async function (event) {
@@ -89,21 +105,6 @@
         }
     });
 
-    function displayFreeRooms(rooms){
-        if(Array.isArray(rooms)) {
-            const availableRoomsList = document.getElementById('availableRooms');
-            // Clear existing list items
-            availableRoomsList.innerHTML = '';
-
-            // Add available rooms to the list
-            rooms.forEach(room => {
-                const listItem = document.createElement('li');
-                listItem.textContent = `Room Number: ${room.roomNumber}, Beds: ${room.capacity}`;
-                availableRoomsList.appendChild(listItem);
-            });
-        }
-    }
-
     document.getElementById('bookRoomBtn').addEventListener('click', function () {
         const formData = new FormData(document.getElementById('bookRoomForm'));
         const customerId = formData.get('customerID');
@@ -133,7 +134,7 @@
             })
     });
 
-    document.getElementById('generateMasterDataBtn').addEventListener('click', function() {
+    document.getElementById('generateMasterDataBtn').addEventListener('click', function () {
         // Make a POST request to trigger master data creation
         fetch('http://localhost:8081/masterdata', {
             method: 'POST',
@@ -151,7 +152,7 @@
             });
     });
 
-    document.getElementById('deleteQueryModelBtn').addEventListener('click', function() {
+    document.getElementById('deleteQueryModelBtn').addEventListener('click', function () {
         // Make a DELETE request to delete the query model
         fetch('http://localhost:8082/queryModelsDeletedEvent', {
             method: 'POST',
@@ -169,7 +170,7 @@
             });
     });
 
-    document.getElementById('restoreQueryModelBtn').addEventListener('click', function() {
+    document.getElementById('restoreQueryModelBtn').addEventListener('click', function () {
         // Make a POST request to restore the query model
         fetch('http://localhost:8080/restoreQueryModelsEvent', {
             method: 'POST',
@@ -186,6 +187,128 @@
                 alert('Failed to restore the query model.'); // Show error message
             });
     });
+
+    // Get all customers
+    document.getElementById('getAllCustomersBtn').addEventListener('click', async function () {
+        try {
+            const response = await fetch('http://localhost:8082/customers');
+            const customers = await response.json();
+            displayCustomers(customers);
+        } catch (error) {
+            console.error('Error fetching customers:', error);
+            alert('Failed to fetch customers. Please try again later.');
+        }
+    });
+
+    // New functionality to get customers by name
+    document.getElementById('getCustomersByNameBtn').addEventListener('click', async function () {
+        const name = document.getElementById('customerName').value;
+        try {
+            const response = await fetch('http://localhost:8082/customerByName', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: name
+                })
+            });
+            const customers = await response.json();
+            displayCustomers(customers);
+        } catch (error) {
+            console.error('Error fetching customers by name:', error);
+            alert('Failed to fetch customers by name. Please try again later.');
+        }
+    });
+
+    // New functionality to get bookings by date
+    document.getElementById('getBookingsByDateBtn').addEventListener('click', async function () {
+        const fromDate = document.getElementById('bookingFromDate').value;
+        const toDate = document.getElementById('bookingToDate').value;
+        try {
+            const response = await fetch('http://localhost:8082/bookingsByDate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    fromDate: fromDate,
+                    toDate: toDate
+                })
+            });
+            const bookings = await response.json();
+            displayBookings(bookings);
+        } catch (error) {
+            console.error('Error fetching bookings by date:', error);
+            alert('Failed to fetch bookings by date. Please try again later.');
+        }
+    });
+
+    // New functionality to get all bookings
+    document.getElementById('getAllBookingsBtn').addEventListener('click', async function () {
+        try {
+            const response = await fetch('http://localhost:8082/bookings');
+            const bookings = await response.json();
+            displayBookings(bookings);
+        } catch (error) {
+            console.error('Error fetching all bookings:', error);
+            alert('Failed to fetch all bookings. Please try again later.');
+        }
+    });
+
+    // Function to display customers
+    function displayCustomers(customers) {
+        let customersList = document.getElementById('customersList');
+        if (!customersList) {
+            customersList = document.createElement('ul');
+            customersList.id = 'customersList';
+            customersList.innerHTML = "<h2>Customers</h2>";
+            document.body.appendChild(customersList);
+        } else {
+            customersList.innerHTML = "<h2>Customers</h2>";
+        }
+        customers.forEach(customer => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `Customer ID: ${customer.customerID}, Name: ${customer.name}, Address: ${customer.address}, Birthdate: ${customer.birthdate}`;
+            customersList.appendChild(listItem);
+        });
+    }
+
+    // Function to display bookings
+    function displayBookings(bookings) {
+        let bookingsList = document.getElementById('bookingsList');
+        if (!bookingsList) {
+            bookingsList = document.createElement('ul');
+            bookingsList.id = 'bookingsList';
+            bookingsList.innerHTML = "<h2>Bookings</h2>";
+            document.body.appendChild(bookingsList);
+        } else {
+            bookingsList.innerHTML = "<h2>Bookings</h2>";
+        }
+        bookings.forEach(booking => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `Booking ID: ${booking.bookingID}, Customer ID: ${booking.customerID}, Room Number: ${booking.roomNumber}, Check-In Date: ${booking.checkInDate}, Check-Out Date: ${booking.checkOutDate}`;
+            bookingsList.appendChild(listItem);
+        });
+    }
+
+    function displayFreeRooms(rooms) {
+        let roomsList = document.getElementById('availableRoomsList');
+        if (!roomsList) {
+            roomsList = document.createElement('ul');
+            roomsList.id = 'availableRoomsList';
+            roomsList.innerHTML = "<h2>Available Rooms</h2>";
+            document.body.appendChild(roomsList);
+        } else {
+            roomsList.innerHTML = "<h2>Available Rooms</h2>";
+        }
+        rooms.forEach(room => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `Room Number: ${room.roomNumber}, Beds: ${room.capacity}`;
+            roomsList.appendChild(listItem);
+        });
+    }
+
 </script>
 </body>
 </html>
