@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Room Booking</title>
+</head>
+<body>
+
+<div id="formContainer" style="display:flex; margin-left: 50px;">
+    <form id="findRoomsForm">
+        <h1>Find Available Rooms</h1>
+        <label for="checkInDate">Check In Date:
+            <input id="checkInDate" name="checkInDate" required type="date"><br>
+        </label>
+
+        <label for="checkOutDate">Check Out Date:
+            <input id="checkOutDate" name="checkOutDate" required type="date"><br>
+        </label>
+
+        <label for="numberOfPersons">Number of Persons:
+            <input id="numberOfPersons" min="1" name="numberOfPersons" required type="number"><br>
+        </label>
+
+        <button id="findRoomsBtn" type="button">Find Available Rooms</button>
+
+
+    </form>
+    <form id="bookRoomForm" style="margin-left: 50px;">
+        <h1>Book Room</h1>
+        <label for="bookingCustomerId">Customer ID:
+            <input id="bookingCustomerId" min="1" name="customerID" required type="number"><br>
+        </label>
+
+        <label for="bookingRoomId">Room Number:
+            <input id="bookingRoomId" min="1" name="roomID" required type="number"><br>
+        </label>
+
+        <label for="bookingCheckInDate">Check In Date:
+            <input id="bookingCheckInDate" name="checkInDate" required type="date"><br>
+        </label>
+
+        <label for="bookingCheckOutDate">Check Out Date:
+            <input id="bookingCheckOutDate" name="checkOutDate" required type="date"><br>
+        </label>
+
+        <button id="bookRoomBtn" type="button">Book Room</button>
+    </form>
+    <div style="margin-left: 50px;">
+        <h1>Generate Masterdata</h1>
+        <button id="generateMasterDataBtn" type="button">Generate Master Data</button>
+
+        <br>
+        <button id="deleteQueryModelBtn" type="button">Delete Query Model</button>
+        <button id="restoreQueryModelBtn" type="button">Restore Query Model</button>
+    </div>
+</div>
+
+<h1>Available Rooms</h1>
+<ul id="availableRooms"></ul>
+
+
+<script>
+    document.getElementById('findRoomsBtn').addEventListener('click', async function (event) {
+
+        const formData = new FormData(document.getElementById('findRoomsForm'));
+        const checkInDate = formData.get('checkInDate');
+        const checkOutDate = formData.get('checkOutDate');
+        const capacity = parseInt(formData.get('numberOfPersons'));
+
+        try {
+            const response = await fetch('http://localhost:8082/freeRooms', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    checkInDate,
+                    checkOutDate,
+                    capacity
+                })
+            });
+
+            const availableRooms = await response.json();
+            displayFreeRooms(availableRooms)
+        } catch (error) {
+            console.error('Error fetching free rooms:', error);
+            alert('Failed to find available rooms. Please try again later.');
+        }
+    });
+
+    function displayFreeRooms(rooms) {
+        if (Array.isArray(rooms)) {
+            const availableRoomsList = document.getElementById('availableRooms');
+            // Clear existing list items
+            availableRoomsList.innerHTML = '';
+
+            // Add available rooms to the list
+            rooms.forEach(room => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `Room Number: ${room.roomNumber}, Beds: ${room.capacity}`;
+                availableRoomsList.appendChild(listItem);
+            });
+        }
+    }
+
+    document.getElementById('bookRoomBtn').addEventListener('click', function () {
+        const formData = new FormData(document.getElementById('bookRoomForm'));
+        const customerId = formData.get('customerID');
+        const roomId = formData.get('roomID');
+        const checkInDate = formData.get('checkInDate');
+        const checkOutDate = formData.get('checkOutDate');
+
+        const response = fetch('http://localhost:8081/book', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                customerId,
+                roomId,
+                checkInDate,
+                checkOutDate
+            })
+        })
+            .then(response => response.text())
+            .then(message => {
+                alert(message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to book the room.');
+            })
+    });
+
+    document.getElementById('generateMasterDataBtn').addEventListener('click', function () {
+        // Make a POST request to trigger master data creation
+        fetch('http://localhost:8081/masterdata', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.text())
+            .then(message => {
+                alert(message); // Show success message
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to generate master data.'); // Show error message
+            });
+    });
+
+    document.getElementById('deleteQueryModelBtn').addEventListener('click', function () {
+        // Make a DELETE request to delete the query model
+        fetch('http://localhost:8081/masterdata', {
+            method: 'DELETE',
+        })
+            .then(response => response.json())
+            .then(message => {
+                alert(message); // Show success message
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to delete the query model.'); // Show error message
+            });
+    });
+
+    document.getElementById('restoreQueryModelBtn').addEventListener('click', function () {
+        // Make a POST request to restore the query model
+        fetch('http://localhost:8080/restoreQueryModelsEvent', {
+            method: 'POST',
+        })
+            .then(response => response.text())
+            .then(message => {
+                alert(message); // Show success message
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to restore the query model.'); // Show error message
+            });
+    });
+</script>
+</body>
+</html>

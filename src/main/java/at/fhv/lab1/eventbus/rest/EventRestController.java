@@ -1,11 +1,14 @@
 package at.fhv.lab1.eventbus.rest;
 
-import at.fhv.lab1.eventbus.EventService;
 import at.fhv.lab1.eventbus.EventPublisher;
+import at.fhv.lab1.eventbus.EventService;
 import at.fhv.lab1.eventbus.events.*;
 import at.fhv.lab1.eventbus.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -64,8 +67,8 @@ public class EventRestController {
         return true;
     }
 
-    @PostMapping(value= "restoreQueryModelsEvent", consumes = "application/json")
-    public Boolean handleRestoreQueryModelsEvent(){
+    @PostMapping(value = "restoreQueryModelsEvent")
+    public Boolean handleRestoreQueryModelsEvent() {
         List<Event> events = eventService.restoreReadSideData();
 
         //Todo let make another PublishEvent method with Event as parameter

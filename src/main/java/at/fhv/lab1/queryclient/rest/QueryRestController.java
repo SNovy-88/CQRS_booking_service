@@ -9,15 +9,16 @@ import at.fhv.lab1.queryclient.projection.CustomerProjection;
 import at.fhv.lab1.queryclient.projection.FreeRoom;
 import at.fhv.lab1.queryclient.query.GetBookingsQuery;
 import at.fhv.lab1.queryclient.query.GetCustomerByNameQuery;
-import at.fhv.lab1.queryclient.query.GetCustomersQuery;
 import at.fhv.lab1.queryclient.query.GetFreeRoomsQuery;
 import at.fhv.lab1.queryclient.service.BookingQueryService;
 import at.fhv.lab1.queryclient.service.CustomerQueryService;
 import at.fhv.lab1.queryclient.service.RoomQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -54,7 +55,7 @@ public class QueryRestController {
 
     @PostMapping(value = "/roomBookedEvent", consumes = "application/json")
     public Boolean handleRoomBookedEvent(@RequestBody RoomBookedEvent event) {
-        Boolean success1 = false;
+        Boolean success1;
         success1 = bookingQueryService.addBookingToRepository(event);
         Boolean success2 = roomQueryService.bookRoom(event);
 
@@ -63,16 +64,16 @@ public class QueryRestController {
 
     @PostMapping(value = "bookingCanceledEvent", consumes = "application/json")
     public Boolean handleBookingCanceledEvent(@RequestBody BookingCanceledEvent event) {
-        Boolean success = false;
+        Boolean success;
         success = bookingQueryService.cancelBooking(event);
         success = roomQueryService.cancelBooking(event);
 
         return success;
     }
 
-    @PostMapping(value = "/freeRooms", consumes = "application/json")
+    @GetMapping(value = "/freeRooms", consumes = "application/json")
     public List<FreeRoom> getFreeRooms(@RequestBody GetFreeRoomsQuery query) {
-        List<FreeRoom> freeRooms = new ArrayList<>();
+        List<FreeRoom> freeRooms;
         if (query.getCheckInDate() == null || query.getCheckOutDate() == null || query.getCapacity() == 0) {
             freeRooms = roomQueryService.getAllFreeRooms();
         } else {
@@ -88,7 +89,7 @@ public class QueryRestController {
         return bookings;
     }
 
-    @GetMapping(value = "/bookings", consumes = "application/json")
+    @GetMapping(value = "/bookings")
     public List<BookingProjection> getAllBookings() {
         List<BookingProjection> bookings = bookingQueryService.getAllBookings();
 
@@ -97,7 +98,7 @@ public class QueryRestController {
 
     @GetMapping(value = "/customerByName", consumes = "application/json")
     public List<CustomerProjection> getCustomersByName(@RequestBody GetCustomerByNameQuery query) {
-        List<CustomerProjection> customers = new ArrayList<>();
+        List<CustomerProjection> customers;
         if (query.getName() != null && !query.getName().isEmpty()) {
             customers = customerQueryService.getCustomersByName(query.getName());
         } else {
@@ -107,7 +108,7 @@ public class QueryRestController {
         return customers;
     }
 
-    @GetMapping(value = "/customers", consumes = "application/json")
+    @GetMapping(value = "/customers")
     public List<CustomerProjection> getCustomers() {
         List<CustomerProjection> allCustomers = customerQueryService.getAllCustomers();
         return allCustomers;
