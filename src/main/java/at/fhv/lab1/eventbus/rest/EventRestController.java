@@ -5,14 +5,12 @@ import at.fhv.lab1.eventbus.EventService;
 import at.fhv.lab1.eventbus.events.*;
 import at.fhv.lab1.eventbus.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class EventRestController {
 
     private final EventRepository repository;
