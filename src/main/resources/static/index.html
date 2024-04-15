@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Room Booking</title>
-    <script type="text/javascript" src="index.js"></script>
+    <script src="index.js" type="text/javascript"></script>
 </head>
 <body>
 
@@ -12,7 +12,7 @@
     <form id="findRoomsForm" method="POST">
         <h1>Find Available Rooms</h1>
         <label for="checkInDate">Check In Date:
-            <input id="checkInDate" name="checkInDate" required type="date" ><br>
+            <input id="checkInDate" name="checkInDate" required type="date"><br>
         </label>
 
         <label for="checkOutDate">Check Out Date:
@@ -25,7 +25,7 @@
 
         <button id="findRoomsBtn" type="submit">Find Available Rooms</button>
     </form>
-    <form id="bookRoomForm" style="margin-left: 50px;" method="POST">
+    <form id="bookRoomForm" method="POST" style="margin-left: 50px;">
         <h1>Book Room</h1>
         <label for="bookingCustomerId">Customer ID:
             <input id="bookingCustomerId" min="1" name="customerID" required type="number"><br>
@@ -60,15 +60,15 @@
         <h1>Customer Operations</h1>
         <form id="createCustomerForm" method="POST">
             <label for="customerNameCreate" style="margin-top: 20px;">Customer Name:
-                <input id="customerNameCreate" type="text" required>
+                <input id="customerNameCreate" name="customerNameCreate" required type="text">
             </label>
             <br>
             <label for="customerAddress" style="margin-top: 20px;">Customer Address:
-                <input id="customerAddress" type="text" required>
+                <input id="customerAddress" name="customerAddress" required type="text">
             </label>
             <br>
             <label for="customerBirthdate" style="margin-top: 20px;">Customer Birthdate:
-                <input id="customerBirthdate" type="date" required>
+                <input id="customerBirthdate" name="customerBirthdate" required type="date">
             </label>
             <br>
             <button id="createCustomerBtn" type="submit">Create Customer</button>
@@ -78,7 +78,7 @@
         <br><br>
         <form id="getCustomerByNameForm" method="POST">
             <label for="customerName" style="margin-top: 20px;">Customer Name:
-                <input id="customerName" type="text" required>
+                <input id="customerName" required type="text">
             </label>
             <br>
             <button id="getCustomersByNameBtn" type="submit">Get Customers by Name</button>
@@ -91,11 +91,11 @@
         <br><br>
         <form id="getBookingsByDateForm" method="POST">
             <label for="bookingFromDate" style="margin-top: 50px;">From:
-                <input id="bookingFromDate" type="date" required>
+                <input id="bookingFromDate" required type="date">
             </label>
             <br>
             <label for="bookingToDate">To:
-                <input id="bookingToDate" type="date" required>
+                <input id="bookingToDate" required type="date">
             </label>
             <br>
             <button id="getBookingsByDateBtn" type="submit">Get Bookings by Date</button>
