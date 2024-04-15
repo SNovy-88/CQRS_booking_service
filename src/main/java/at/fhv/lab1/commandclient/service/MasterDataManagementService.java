@@ -87,22 +87,8 @@ public class MasterDataManagementService implements IMasterDataManagementService
         bookingRepository.addBooking(booking5);
         eventPublisher.publishEvent(new RoomBookedEvent(booking5));
 
+        System.out.println("booking Repository: in MasterDataManagementService after adding Bookings:");
+
         return true;
-    }
-
-    @Override
-    public Boolean deleteModels() {
-        Boolean success = false;
-
-        success = roomRepository.deleteAllRooms();
-        success = customerRepository.deleteAllCustomers();
-        success = bookingRepository.deleteAllBookings();
-
-        if (success) {
-            eventPublisher.publishEvent(new QueryModelsDeletedEvent());
-            return true;
-        } else {
-            return false;
-        }
     }
 }

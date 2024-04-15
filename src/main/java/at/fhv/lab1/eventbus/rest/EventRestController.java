@@ -1,7 +1,7 @@
 package at.fhv.lab1.eventbus.rest;
 
-import at.fhv.lab1.eventbus.EventService;
 import at.fhv.lab1.eventbus.EventPublisher;
+import at.fhv.lab1.eventbus.EventService;
 import at.fhv.lab1.eventbus.events.*;
 import at.fhv.lab1.eventbus.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class EventRestController {
 
     private final EventRepository repository;
@@ -64,12 +65,12 @@ public class EventRestController {
         return true;
     }
 
-    @CrossOrigin(origins = "http://localhost:8081")
-    @PostMapping(value= "restoreQueryModelsEvent", consumes = "application/json")
-    public Boolean handleRestoreQueryModelsEvent(){
+    @PostMapping(value = "restoreQueryModelsEvent")
+    public Boolean handleRestoreQueryModelsEvent() {
         List<Event> events = eventService.restoreReadSideData();
 
         //Todo let make another PublishEvent method with Event as parameter
+        //Todo check what queryModelsDeletedEvent does
         for (Event event : events) {
             if (event instanceof RoomBookedEvent) {
                 RoomBookedEvent roomBookedEvent = (RoomBookedEvent) event;
@@ -83,10 +84,10 @@ public class EventRestController {
             } else if (event instanceof CustomerCreatedEvent) {
                 CustomerCreatedEvent customerCreatedEvent = (CustomerCreatedEvent) event;
                 eventPublisher.publishEvent(customerCreatedEvent);
-            } else if (event instanceof QueryModelsDeletedEvent) {
+            } /*else if (event instanceof QueryModelsDeletedEvent) {
                 QueryModelsDeletedEvent queryModelsDeletedEvent = (QueryModelsDeletedEvent) event;
                 eventPublisher.publishEvent(queryModelsDeletedEvent);
-            }
+            }*/
         }
         return true;
     }

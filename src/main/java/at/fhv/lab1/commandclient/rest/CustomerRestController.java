@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin
 public class CustomerRestController {
     private final CustomerService customerService;
 
@@ -17,7 +18,6 @@ public class CustomerRestController {
         this.customerService = customerService;
     }
 
-    @CrossOrigin(origins = "http://localhost:8082")
     @PostMapping("/customer")
     public String createCustomer(@RequestBody CreateCustomerCommand createCustomerCommand) {
        if (customerService.createCustomer(createCustomerCommand)) {

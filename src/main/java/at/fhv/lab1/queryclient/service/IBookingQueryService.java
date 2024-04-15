@@ -15,5 +15,7 @@ public interface IBookingQueryService {
 
     List<BookingProjection> getBookingsByDate(LocalDate fromDate, LocalDate toDate);
 
+    List<BookingProjection> getAllBookings();
+
     Boolean cancelBooking(BookingCanceledEvent event);
 }
