@@ -42,7 +42,7 @@ public class QueryRestController {
         return customerQueryService.addCustomerToRepository(event);
     }
 
-    @PostMapping(value = "/queryModelsDeletedEvent", consumes = "application/json")
+    @PostMapping(value = "/queryModelsDeletedEvent")
     public boolean handleQueryModelsDeletedEvent() {
         boolean success = roomQueryService.deleteQueryModels();
         boolean success2 = customerQueryService.deleteQueryModels();

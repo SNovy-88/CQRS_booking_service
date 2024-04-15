@@ -30,13 +30,4 @@ public class MasterDataManagementController {
         }
         return "Command and query models already created.";
     }
-
-    @DeleteMapping("/masterdata")
-    public String deleteQueryModels() {
-        if (masterDataManagementService.deleteModels()) {
-            return "Models deleted successfully.";
-        } else {
-            return "Models deletion failed.";
-        }
-    }
 }

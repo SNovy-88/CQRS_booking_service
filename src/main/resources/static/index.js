@@ -1,12 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
   //Get all free Rooms for a set period in time
   document
-    .getElementById("findRoomsBtn")
-    .addEventListener("click", async function (event) {
+    .getElementById("findRoomsForm")
+    .addEventListener("submit", async function (event) {
+      event.preventDefault();
       const formData = new FormData(document.getElementById("findRoomsForm"));
       const checkInDate = formData.get("checkInDate");
       const checkOutDate = formData.get("checkOutDate");
-      const capacity = parseInt(formData.get("numberOfPersons"));
+      const capacity = parseInt(formData.get("capacity"));
 
       try {
         const response = await fetch("http://localhost:8082/freeRooms", {
@@ -30,7 +31,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
   // Add a booking
-  document.getElementById("bookRoomBtn").addEventListener("click", function () {
+  document.getElementById("bookRoomForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
     const formData = new FormData(document.getElementById("bookRoomForm"));
     const customerID = formData.get("customerID");
     const roomID = formData.get("roomID");
@@ -139,8 +142,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Get customers by name
   document
-    .getElementById("getCustomersByNameBtn")
-    .addEventListener("click", async function () {
+    .getElementById("getCustomerByNameForm")
+    .addEventListener("submit", async function (event) {
+      event.preventDefault();
       const name = document.getElementById("customerName").value;
       try {
         const response = await fetch("http://localhost:8082/customerByName", {
@@ -162,8 +166,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Get bookings by date
   document
-    .getElementById("getBookingsByDateBtn")
-    .addEventListener("click", async function () {
+    .getElementById("getBookingsByDateForm")
+    .addEventListener("submit", async function (event) {
+      event.preventDefault();
+
       const fromDate = document.getElementById("bookingFromDate").value;
       const toDate = document.getElementById("bookingToDate").value;
       try {

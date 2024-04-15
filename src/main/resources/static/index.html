@@ -9,7 +9,7 @@
 <body>
 
 <div id="formContainer" style="display:flex; margin-left: 50px;">
-    <form id="findRoomsForm">
+    <form id="findRoomsForm" method="POST">
         <h1>Find Available Rooms</h1>
         <label for="checkInDate">Check In Date:
             <input id="checkInDate" name="checkInDate" required type="date" ><br>
@@ -19,13 +19,13 @@
             <input id="checkOutDate" name="checkOutDate" required type="date"><br>
         </label>
 
-        <label for="numberOfPersons">Number of Persons:
-            <input id="numberOfPersons" min="1" name="numberOfPersons" required type="number"><br>
+        <label for="capacity">Number of Persons:
+            <input id="capacity" min="1" name="capacity" required type="number"><br>
         </label>
 
-        <button id="findRoomsBtn" type="button">Find Available Rooms</button>
+        <button id="findRoomsBtn" type="submit">Find Available Rooms</button>
     </form>
-    <form id="bookRoomForm" style="margin-left: 50px;">
+    <form id="bookRoomForm" style="margin-left: 50px;" method="POST">
         <h1>Book Room</h1>
         <label for="bookingCustomerId">Customer ID:
             <input id="bookingCustomerId" min="1" name="customerID" required type="number"><br>
@@ -43,7 +43,7 @@
             <input id="bookingCheckOutDate" name="checkOutDate" required type="date"><br>
         </label>
 
-        <button id="bookRoomBtn" type="button">Book Room</button>
+        <button id="bookRoomBtn" type="submit">Book Room</button>
     </form>
     <div style="margin-left: 50px;">
         <h1>Generate Masterdata</h1>
@@ -60,26 +60,30 @@
         <h1>Customer Operations</h1>
         <button id="getAllCustomersBtn" type="button">Get All Customers</button>
         <br><br>
-        <label for="customerName" style="margin-top: 20px;">Customer Name:
-            <input id="customerName" type="text" required>
-        </label>
-        <br>
-        <button id="getCustomersByNameBtn" type="button">Get Customers by Name</button>
+        <form id="getCustomerByNameForm" method="POST">
+            <label for="customerName" style="margin-top: 20px;">Customer Name:
+                <input id="customerName" type="text" required>
+            </label>
+            <br>
+            <button id="getCustomersByNameBtn" type="submit">Get Customers by Name</button>
+        </form>
     </div>
 
     <div style="margin-left: 150px; display: inline-block;">
         <h1>Booking Operations</h1>
         <button id="getAllBookingsBtn" type="button">Get All Bookings</button>
         <br><br>
-        <label for="bookingFromDate" style="margin-top: 50px;">From:
-            <input id="bookingFromDate" type="date" required>
-        </label>
-        <br>
-        <label for="bookingToDate">To:
-            <input id="bookingToDate" type="date" required>
-        </label>
-        <br>
-        <button id="getBookingsByDateBtn" type="button">Get Bookings by Date</button>
+        <form id="getBookingsByDateForm" method="POST">
+            <label for="bookingFromDate" style="margin-top: 50px;">From:
+                <input id="bookingFromDate" type="date" required>
+            </label>
+            <br>
+            <label for="bookingToDate">To:
+                <input id="bookingToDate" type="date" required>
+            </label>
+            <br>
+            <button id="getBookingsByDateBtn" type="submit">Get Bookings by Date</button>
+        </form>
     </div>
 </div>
 

@@ -91,20 +91,4 @@ public class MasterDataManagementService implements IMasterDataManagementService
 
         return true;
     }
-
-    @Override
-    public Boolean deleteModels() {
-        Boolean success = false;
-
-        success = roomRepository.deleteAllRooms();
-        success = customerRepository.deleteAllCustomers();
-        success = bookingRepository.deleteAllBookings();
-
-        if (success) {
-            eventPublisher.publishEvent(new QueryModelsDeletedEvent());
-            return true;
-        } else {
-            return false;
-        }
-    }
 }
