@@ -140,6 +140,36 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
+  // create customer
+  document.getElementById("createCustomerForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const formData = new FormData(document.getElementById("createCustomerForm"));
+    const customerNameCreate = formData.get("customerNameCreate");
+    const customerAddress = formData.get("customerAddress");
+    const customerBirthdate = formData.get("customerBirthdate");
+
+    const response = fetch("http://localhost:8081/customer", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "name": customerNameCreate,
+        "address": customerAddress,
+        "birthDate": customerBirthdate
+      }),
+    })
+        .then((response) => response.text())
+        .then((message) => {
+          alert(message);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          alert("Failed to create customer.");
+        });
+  });
+
   // Get customers by name
   document
     .getElementById("getCustomerByNameForm")

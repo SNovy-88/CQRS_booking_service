@@ -58,6 +58,22 @@
 <div style="margin-top: 50px; margin-left: 50px;">
     <div style="display: inline-block;">
         <h1>Customer Operations</h1>
+        <form id="createCustomerForm" method="POST">
+            <label for="customerNameCreate" style="margin-top: 20px;">Customer Name:
+                <input id="customerNameCreate" type="text" required>
+            </label>
+            <br>
+            <label for="customerAddress" style="margin-top: 20px;">Customer Address:
+                <input id="customerAddress" type="text" required>
+            </label>
+            <br>
+            <label for="customerBirthdate" style="margin-top: 20px;">Customer Birthdate:
+                <input id="customerBirthdate" type="date" required>
+            </label>
+            <br>
+            <button id="createCustomerBtn" type="submit">Create Customer</button>
+        </form>
+        <br><br>
         <button id="getAllCustomersBtn" type="button">Get All Customers</button>
         <br><br>
         <form id="getCustomerByNameForm" method="POST">
