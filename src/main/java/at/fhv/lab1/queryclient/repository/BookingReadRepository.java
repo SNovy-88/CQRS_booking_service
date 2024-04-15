@@ -24,8 +24,13 @@ public class BookingReadRepository implements IBookingReadRepository {
     @Override
     public Boolean addBooking(BookingProjection bookingProjection) {
         bookingProjections.add(bookingProjection);
-
+        System.out.println("Booking added to repository");
         return true;
+    }
+
+    @Override
+    public List<BookingProjection> getAllBookings() {
+        return bookingProjections;
     }
 
     @Override
@@ -39,13 +44,14 @@ public class BookingReadRepository implements IBookingReadRepository {
         }
     }
 
+    //TODO what if no date is inputted?
     public List<BookingProjection> getBookingsByDate(LocalDate fromDate, LocalDate toDate) {
         List<BookingProjection> bookingProjectionList = new ArrayList<>();
         for (BookingProjection bookingProjection : bookingProjections) {
             if ((bookingProjection.getCheckInDate().isAfter(fromDate) ||
-                    bookingProjection.getCheckOutDate().isEqual(fromDate)) &&
-                    (bookingProjection.getCheckOutDate().isBefore(toDate)) ||
-                    bookingProjection.getCheckOutDate().isEqual(toDate)) {
+                    bookingProjection.getCheckInDate().isEqual(fromDate)) &&
+                    (bookingProjection.getCheckOutDate().isBefore(toDate) ||
+                    bookingProjection.getCheckOutDate().isEqual(toDate))) {
                 bookingProjectionList.add(bookingProjection);
             }
         }
