@@ -164,6 +164,31 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
+  // Delete Booking
+  document
+      .getElementById("cancelBookingForm")
+      .addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const bookingID = document.getElementById("bookingId").value;
+        const response = await fetch("http://localhost:8081/cancel", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              bookingID: bookingID,
+            })
+          }).then((response) => response.text())
+              .then((message) => {
+                alert(message); // Show success message
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+                alert("Failed to cancel booking"); // Show error message
+              });
+        });
+
   // Get bookings by date
   document
     .getElementById("getBookingsByDateForm")

@@ -71,6 +71,14 @@
 
     <div style="margin-left: 150px; display: inline-block;">
         <h1>Booking Operations</h1>
+        <form id="cancelBookingForm" method="POST">
+            <label for="bookingId">Booking ID:
+                <input id="bookingId" type="number" required>
+            </label>
+            <br>
+            <button id="cancelBookingByIdBtn" type="submit">Cancel Booking</button>
+            <br><br>
+        </form>
         <button id="getAllBookingsBtn" type="button">Get All Bookings</button>
         <br><br>
         <form id="getBookingsByDateForm" method="POST">
