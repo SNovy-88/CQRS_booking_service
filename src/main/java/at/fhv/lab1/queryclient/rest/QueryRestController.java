@@ -53,8 +53,7 @@ public class QueryRestController {
 
     @PostMapping(value = "/roomBookedEvent", consumes = "application/json")
     public Boolean handleRoomBookedEvent(@RequestBody RoomBookedEvent event) {
-        Boolean success1;
-        success1 = bookingQueryService.addBookingToRepository(event);
+        Boolean success1 = bookingQueryService.addBookingToRepository(event);
         Boolean success2 = roomQueryService.bookRoom(event);
 
         return success1 && success2;
@@ -62,11 +61,10 @@ public class QueryRestController {
 
     @PostMapping(value = "bookingCanceledEvent", consumes = "application/json")
     public Boolean handleBookingCanceledEvent(@RequestBody BookingCanceledEvent event) {
-        Boolean success;
-        success = bookingQueryService.cancelBooking(event);
-        success = roomQueryService.cancelBooking(event);
+        Boolean success1 = bookingQueryService.cancelBooking(event);
+        Boolean success2 = roomQueryService.cancelBooking(event);
 
-        return success;
+        return success1 && success2;
     }
 
     @PostMapping(value = "/freeRooms", consumes = "application/json")

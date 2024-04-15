@@ -69,8 +69,6 @@ public class EventRestController {
     public Boolean handleRestoreQueryModelsEvent() {
         List<Event> events = eventService.restoreReadSideData();
 
-        //Todo let make another PublishEvent method with Event as parameter
-        //Todo check what queryModelsDeletedEvent does
         for (Event event : events) {
             if (event instanceof RoomBookedEvent) {
                 RoomBookedEvent roomBookedEvent = (RoomBookedEvent) event;
@@ -84,10 +82,7 @@ public class EventRestController {
             } else if (event instanceof CustomerCreatedEvent) {
                 CustomerCreatedEvent customerCreatedEvent = (CustomerCreatedEvent) event;
                 eventPublisher.publishEvent(customerCreatedEvent);
-            } /*else if (event instanceof QueryModelsDeletedEvent) {
-                QueryModelsDeletedEvent queryModelsDeletedEvent = (QueryModelsDeletedEvent) event;
-                eventPublisher.publishEvent(queryModelsDeletedEvent);
-            }*/
+            }
         }
         return true;
     }

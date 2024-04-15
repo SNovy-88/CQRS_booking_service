@@ -189,11 +189,11 @@ document.addEventListener("DOMContentLoaded", function () {
               });
         });
 
-  // Get bookings by date
-  document
-    .getElementById("getBookingsByDateForm")
-    .addEventListener("submit", async function (event) {
-      event.preventDefault();
+    // Get bookings by date
+    document
+        .getElementById("getBookingsByDateForm")
+        .addEventListener("submit", async function (event) {
+            event.preventDefault();
 
       const fromDate = document.getElementById("bookingFromDate").value;
       const toDate = document.getElementById("bookingToDate").value;
